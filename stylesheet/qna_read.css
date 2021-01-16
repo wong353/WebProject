@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+table {
+	margin: 0 auto;
+	width: 1200px;
+	letter-spacing: 0.06em;
+	line-height: 1.5;
+	font-family: 'Open Sans', 'Nanum Gothic', sans-serif;
+}
+
+form {
+	text-align: left;
+	font-size: 9pt;
+}
+
+input, textarea {
+	border: none;
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 0px;
+	resize: none;
+}
+
+.view-link2:link {color:white; text-decoration: none;}
+.view-link2:visited {color:white; text-decoration: none;}
+.view-link2:hover {color:white; text-decoration: none;}
+
+textarea:focus {
+	outline: none;
+}
+
+button:focus {
+	outline: none;
+}
+
+input:focus {
+	outline: none;
+}
+
+#labeltag {
+	font-size: 9pt;
+	width: 50px;
+	color: #727272;
+}
+
+#title{
+	font-size: 20pt;
+	text-align: center;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+#title-content{
+	font-size: 9pt;
+	padding-bottom: 20px;
+}
+
+#subtitle {
+	color: #727272;
+	font-size: 9pt;
+}
+
+#content {
+	text-align: left;
+	width: 1200px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid black;
+	font-size: 9pt;
+}
+#view-menu{
+	margin-bottom: 100px;
+}
+.view-link{
+	font-size: 9pt;
+	display:inline-block;
+	border: 1px solid black;
+	background-color: black;
+	padding:0 2px;
+}
+.button{
+	font-size: 9pt;
+	color:black;
+	background-color: transparent;
+}

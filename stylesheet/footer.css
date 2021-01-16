@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+#footer_wrap{
+	width:100%;
+	height:auto;
+}
+ul li{
+	list-style-type: none;
+}

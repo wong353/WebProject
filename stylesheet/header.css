@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+#header_top {
+	margin-bottom: 0px;
+	z-index: 11;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	min-width: 1200px;
+	font-weight: bold;
+	background: #fff;
+}
+
+#cateline {
+	width: 300px;
+	margin-left: 360px;
+	float: left;
+}
+
+#logo{
+	margin-right:50%;
+}
+
+#logmenu {
+	width: 300px;
+	margin-right: 360px;
+	float: right;
+}
+#header_space{
+	width:1200px;
+	height:80px;	
+}

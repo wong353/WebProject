@@ -1,0 +1,44 @@
+fieldset {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border-width: 0px;
+    border-style: groove;
+    border-image: initial;
+    border: 0;
+}
+
+.scede-frm{
+	width:50%;
+	margin-left: 500px;
+}
+
+.dbox-wrap {
+	display:block;
+	margin-left:500px;
+    width: 50%;
+    border: 1px solid #dedede;
+    margin-bottom: 10px;
+}
+
+.dbox-wrap li {
+    padding: 20px 0;
+    font-size:10pt;
+}
+textarea{
+	width: 900px;
+    height: 175px;
+    border: 1px solid
+}
+.tb-center {
+	font-size:10pt;
+	float:left;
+}
+li{
+	font-size:10pt;
+}

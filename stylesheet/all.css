@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+body {
+	margin: 0;
+	padding: 0;
+}
+a{
+	font-size: 9pt;
+}
+
+a:link {color:black; text-decoration: none;}
+a:visited {color:black; text-decoration: none;}
+a:hover {color:black; text-decoration: none;}
+
+
+#footer_wrap {
+    clear: both;
+    width: 100%;
+    min-width: 1200px;
+    min-height: 240px;
+    height: auto;
+    margin-top: 30px;
+    background: gray;
+    position: relative;
+    z-index: 1;
+}
+
+.footer_menu_elements{
+	display: inline;
+	margin-left: 1px;
+}
+
