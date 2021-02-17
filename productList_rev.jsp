@@ -10,18 +10,12 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/qna.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/productlist.css?after">
 <meta charset="UTF-8">
-<title>QnA</title>
+<title>PRODUCT</title>
 </head>
 <style type="text/css">
-table{
-	
-	width: 1400px;
-	margin: 0 auto;
-	border-collapse: collapse;
-	border-style: solid 3px gray;
-	
-}
+
 </style>
 
 <script type="text/javascript">
@@ -37,9 +31,7 @@ function frm_action2(frm) {
 </script>
 <body>
 <%@ include file = "/include/dbconn.jsp" %>
-
 <%@include file="/include/loginSessionPass.jsp" %>
-
 <%@include file="/include/header.jsp" %>
 
 <%
@@ -69,7 +61,7 @@ function frm_action2(frm) {
 	
 	String sql = "";
 	
-		String sqlCount = "SELECT COUNT(*) FROM board";
+		String sqlCount = "SELECT COUNT(*) FROM product";
 		pstmt = conn.prepareStatement(sqlCount);
 		rs = pstmt.executeQuery();
 		
@@ -82,30 +74,12 @@ function frm_action2(frm) {
 		rs.close();
 		pstmt.close();
 		
-		//step2 설정을 위한 쿼리
-		String sqlSort = "SELECT num FROM board order by ref desc, step asc";
-		pstmt = conn.prepareStatement(sqlSort);
-		rs = pstmt.executeQuery();
-		 while(rs.next()){
-			int stepNum = rs.getInt(1);
-			sql = "UPDATE board SET step2 = ? where num = ?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, sort);
-			pstmt.setInt(2, stepNum);
-			pstmt.executeUpdate();
-			sort++;
-		}
-		pstmt.close();
-		rs.close();
-		
 		// 끝페이지 설정
 	 	allPage = (int)Math.ceil(total/(double)ROWSIZE);
 		
 		if(endPage > allPage) {
 			endPage = allPage;
 		}
-		
-		out.print("총 게시물 : " + total + "개");
 		
 		/* String sqlList = "SELECT num, name, subject, regist_day, hit, indent from board where STEP2 >=? and STEP2 <= ? order by step2 asc";
 		pstmt = conn.prepareStatement(sqlList);
@@ -121,67 +95,74 @@ function frm_action2(frm) {
 			int indent = rs.getInt("indent");
 		} */
 %>
-<form action="qna_search_process.jsp" method="post" name="myform" onsubmit='return frm_action()'>
+<form action="" method="get" name="myform" >
 			<div id="qna-caption">
-				 <h3 style="margin:60px;">Q&A</h3>
+				 <h3 style="margin:60px;">PRODUCT</h3>
 				<div id="qna-wrapper">
 					<div id="qna-table">
-							<table border="1" width="500">
-							<th>NO.</th>
-							<th>SUBJECT</th>
-							<th>NAME</th>
-							<th>DATE</th>
-							<th>HITS</th>						
-							
+							<table>
+								<tr>
+									<th>상품아이디</th>
+									<th>상품명</th>
+									<th>가격</th>
+									<th>사이즈</th>
+									<th>컬러</th>
+									<th>상품 설명</th>
+									<th>분류</th>						
+									<th>재고수</th>						
+									<th>상태</th>						
+									<th>썸네일</th>						
+									<th>디테일사진1</th>						
+									<th>디테일사진2</th>						
+									<th>디테일사진3</th>						
+									<th>디테일사진4</th>		
+								</tr>				
+								
 <%
 	if(total==0){
 %>
 							<tr align="center" bgcolor="#FFFFFF" height="30">
-	 	  						<td colspan="5">등록된 글이 없습니다.</td>
+	 	  						<td colspan="5">등록된 상품이 없습니다.</td>
 	 	  					</tr>
 <%	}else{
-		sql = "SELECT * FROM board  where STEP2 >=? and STEP2 <= ? order by step2 asc";	
+		sql = "SELECT * FROM product order by p_id desc";	
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, start);
-		pstmt.setInt(2, end);
 		rs = pstmt.executeQuery();
 		while(rs.next()){
-			int num = rs.getInt("num");
-			String subject = rs.getString("subject");
-			String rid = rs.getString("id");
-			String name = rs.getString("name");
-			// 이름 마스킹 처리
-			String name_sub1 = name.substring(0, name.length()-1);	// 시작부터 마지막 전까지 저장
-			String name_masking = name_sub1+"*";
-			
-			String regist_day = rs.getString("regist_day");
-			int hit = rs.getInt("hit");
-			String content = rs.getString("content");
-			String ip = rs.getString("ip");
-			int indent = rs.getInt("indent");
-			int parent = rs.getInt("parent");
-			
-			Date date = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-			String nowDate = sf.format(date);
+			String p_id = rs.getString("p_id");
+			String p_name = rs.getString("p_name");
+			String p_unitPrice = rs.getString("p_unitPrice");
+			String p_size = rs.getString("p_size");
+			String p_color = rs.getString("p_color");
+			String p_description = rs.getString("p_description");
+			String p_category = rs.getString("p_category");
+			String p_unitsInStock = rs.getString("p_unitsInStock");
+			String p_condition = rs.getString("p_condition");
+			String p_thumbnail = rs.getString("p_thumbnail");
+			String p_fileName1 = rs.getString("p_fileName_detail1");
+			String p_fileName2 = rs.getString("p_fileName_detail2");
+			String p_fileName3 = rs.getString("p_fileName_detail3");
+			String p_fileName4 = rs.getString("p_fileName_detail4");
 %>	
-							<tr>
-								<td><%=num%></td>
-								<td><%for(int j=0; j<indent; j++){ // 답글의 들여쓰기 정도%>	
-										&nbsp;&nbsp;&nbsp;&nbsp;
-									<%}%>
-									<%if(indent!=0 && parent!=2){ // 답글 아이콘 %>
-										<img src="./image/icon/reply.gif">		
-									<%}else if(indent!=0 && parent==2){ // 삭제된 답글 아이콘%>
-										<img src="./image/icon/reply.gif" id="delSubject">
-									<%}%>	
-									
-									<a href="qna_read.jsp?num=<%=num%>&id=<%=rid%>&pg=<%=pg%>" <%if(parent == 2){ %> style="pointer-events: none; color: #c2c2c2;s"<%}%>><%=subject%></a>
-									<%if(regist_day.equals(nowDate) && parent != 2){ %> <img src="./image/icon/new.jpg"> <% } %></td>
-								<td><%=name_masking%></td>
-								<td><%=regist_day%></td>
-								<td><%=hit%></td>
-							</tr>
+								<tr>
+									<td class="prd_list"><%=p_id%></td>
+									<td class="prd_list"><%=p_name%></td>
+									<td class="prd_list"><%=p_unitPrice%></td>
+									<td class="prd_list"><%=p_size%></td>
+									<td class="prd_list"><%=p_color%></td>
+									<td class="prd_list"><%=p_description%></td>
+									<td class="prd_list"><%=p_category%></td>
+									<td class="prd_list"><%=p_unitsInStock%></td>
+									<td class="prd_list"><%=p_condition%></td>
+									<td class="prd_list_img"><img alt="" src="<%=p_thumbnail%>" class="thumb"></td>
+									<td class="prd_list_img"><img alt="" src="<%=p_fileName1%>" class="thumb"></td>
+									<td class="prd_list_img"><img alt="" src="<%=p_fileName2%>" class="thumb"></td>
+									<td class="prd_list_img"><img alt="" src="<%=p_fileName3%>" class="thumb"></td>
+									<td class="prd_list_img"><img alt="" src="<%=p_fileName4%>" class="thumb"></td>
+									<td id="btwrap"><a href="modifyProduct.jsp?p_id=<%=p_id%>">수정</a> / 
+									<input type="button" onclick="prod_delete()" value="삭제" id="actionbt"> 
+									</td>
+								</tr>
 <%
 		}
 	}
@@ -201,11 +182,11 @@ function frm_action2(frm) {
 										for(int i=startPage; i<= endPage; i++){
 											if(i==pg){
 									%>
-												<b><%=i%></b>
+												<div id="number"><b><%=i%></b></div>
 									<%
 											}else{
 									%>
-												<a href="qna.jsp?pg=<%=i%>"><%=i%></a>
+												<a href="productList_rev.jsp?pg=<%=i%>"><%=i%></a>
 									<%
 											}
 										}
@@ -214,15 +195,15 @@ function frm_action2(frm) {
 									<%
 										if(endPage<allPage){
 									%>
-										<a href="qna.jsp?pg=<%=endPage+1%>">▶</a>
-										<a href="qna.jsp?pg=<%=allPage%>">▶▶</a>
+										<a href="productList_rev.jsp?pg=<%=endPage+1%>">▶</a>
+										<a href="productList_rev.jsp?pg=<%=allPage%>">▶▶</a>
 									<%
 										}
 									%>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="3" align="left">
+								<td colspan="14" id="searchContent">
 									<label>
 										<input type="radio" value="rname" name="radio">이름
 									</label>
@@ -233,9 +214,9 @@ function frm_action2(frm) {
 										<input type="radio" value="rcontent" name="radio">내용
 									</label>
 									<span class="key-wrap"> <input type="text" name="search_text" value="" class="MS_input_txt"><input type="submit" value="검색">
-							</span>
-						</td>
-						<td colspan="2"><input type="button" value="글쓰기" onclick="window.location='qna_write.jsp?id=<%=id%>&pg=<%=pg%>'"></td>
+									</span>
+									<p>총 상품 : <%=total%> 개 </p>
+								</td>
 							</tr>
 						</table>
 					</div>

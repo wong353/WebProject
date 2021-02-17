@@ -1,9 +1,15 @@
 @charset "UTF-8";
 
+
 #footer_wrap{
-	width:100%;
+	width:1900px;
 	height:auto;
+	background-color: black;
 }
 ul li{
 	list-style-type: none;
+}
+p, font{
+	font-family: 'Arita-dotum','Open Sans', sans-serif;
+	color: #808080;
 }

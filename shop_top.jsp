@@ -4,26 +4,29 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="stylesheet/header_cate.css">
-<link rel="stylesheet" type="text/css"
-	href="stylesheet/header_cate2.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/header_cate2.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
 <meta charset="UTF-8">
-<title>입력</title>
+<title>Garment Dying</title>
 </head>
 
 <style type="text/css">
 #banner{
-	width:100%;
-	height: auto;
+	width: 1900px;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	overflow: auto;
+	right: 0;
+	stop: 0;
 }
 </style>
 <body>
 	<%@ include file="/include/dbconn.jsp"%>
-
 	<%@include file="/include/header.jsp"%>
-
+	
 	<div id="shop_banner">
 		<a href="lookbook.jsp"><img alt="banner" src="./image/banner.png" id="banner"></a>
 	</div>
@@ -37,12 +40,11 @@
 	<div class="item-wrap" style="">
 		<!-- 신상품 -->
 		<div class="item-list">
-			<table border="0">
+			<table>
 				<tbody>
 					<%
-						try {
-						String sql = "SELECT * FROM product";
-						
+						try{
+						String sql = "SELECT p_id,p_thumbnail,p_name,p_unitPrice,p_description FROM product";
 						
 						int i = 0;
 
@@ -50,19 +52,23 @@
 						rs = pstmt.executeQuery();
 						while (rs.next()) {
 							if(i%3==0) out.print("<tr>");
-							String thum = rs.getString("p_thumbnail");
+							String p_id = rs.getString("p_id");
+							String thumb = rs.getString("p_thumbnail");
+							String name = rs.getString("p_name");
+							String unitPrice = rs.getString("p_unitPrice");
+							String description = rs.getString("p_description");
 					%>
 						<td>
 							<ul class="item" style="font-size:10pt;">
 								<div class="box unfocused">
 									<li>
 										<div class="thumb">
-											<a href="shop_details_top.jsp"><img src="<%=thum%>" style="width:50%"></a>
+											<a href="shop_details_top.jsp?p_id=<%=p_id%>"><img src="<%=thumb%>"></a>
 										</div>
 									</li> <a href="shop_details_top.jsp"><li class="prd-desc"><span class="MK-product-icons"></span></li>
-										<li class="prd-name"><%=rs.getString("p_name")%></li>
-										<li class="prd-price"><%=rs.getString("p_unitprice")%>원</li>
-										<li class="prd-desc"><%=rs.getString("p_description")%></li> </a>
+										<li class="prd-name"><%=name%></li>
+										<li class="prd-price"><%=unitPrice%>원</li>
+										<li class="prd-desc"><%=description%></li> </a>
 								</div>
 							</ul>
 						</td>

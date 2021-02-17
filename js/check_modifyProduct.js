@@ -6,7 +6,6 @@ function checkModifyProduct() {
 	var size = document.getElementsByName("size"); 
 	var color = document.getElementById("color"); 
 	var description = document.getElementById("description"); 
-	var category = document.getElementsByName("category"); 
 	var unitsInStock = document.getElementById("unitsInStock");
 	var condition = document.getElementsByName("condition");
 	
@@ -71,13 +70,8 @@ function checkModifyProduct() {
 	}	
 	
 	// 상품 분류 체크
-	var count2=0;
-		
-    for (var i = 0; i < category.length; i++) {
-        if (category[i].checked) count2++;	
-    }
-
-	if(count2==0){
+	
+	if(!modifyProduct.category.value){
 		alert("[분류]\n분류를 체크하세요");
 		return false;
 	}
@@ -121,10 +115,10 @@ function checkModifyProduct() {
 		return false;
 	}
 
-	 document.newProduct.submit()
+	 document.modifyProduct.submit()
 }
 function cancel(){
-	if(confirm("입력하신 내용은 저장되지 않습니다. 메인 페이지로 돌아가시겠습니까?")){
+	if(confirm("입력하신 내용은 저장되지 않습니다. 상품 페이지로 돌아가시겠습니까?")){
 		location.href="productList.jsp"; 
 	}
 }

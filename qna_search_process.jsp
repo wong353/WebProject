@@ -114,7 +114,7 @@ table{
 		
 		
 %>
-<form action="qna_search_process.jsp2?search_text=<%=search_text%>&radio=<%=radio%>" method="post" name="myform">
+<form action="qna_search_process.jsp?search_text=<%=search_text%>&radio=<%=radio%>" method="get" name="myform">
 	<%-- <input type="hidden" name="search_text" value="<%=search_text%>">
 	<input type="hidden" name="radio" value="<%=radio%>"> --%>
 	<div id="qna-caption">
@@ -122,7 +122,7 @@ table{
 		<div id="qna-wrapper">
 			<div id="qna-table">
 				<table border="1" width="500">
-					<th>NO.<%=search_text%><%=radio%></th>
+					<th>NO.</th>
 					<th>SUBJECT</th>
 					<th>NAME</th>
 					<th>DATE</th>
@@ -131,12 +131,12 @@ table{
 	if(total==0){
 %>	
 	<tr align="center" bgcolor="#FFFFFF" height="30">
-		<td colspan="5">등록된 글이 없습니다.</td>
+		<td colspan="5">검색된 글이 없습니다.</td>
 	</tr>
 <% 
 	}else{
 		if(radio.equals("rname")){
-			String searchQuery = "SELECT * FROM board WHERE name LIKE ? ORDER BY ref DESC, step ASC";
+			String searchQuery = "SELECT * FROM board WHERE name LIKE ? and STEP3 >=? and STEP3 <= ? ORDER BY step3 ASC";
 			pstmt = conn.prepareStatement(searchQuery);
 			pstmt.setString(1, "%"+search_text+"%");
 		}else if(radio.equals("rsubject")){
@@ -146,7 +146,7 @@ table{
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 		}else if(radio.equals("rcontent")){
-			String searchQuery = "SELECT * FROM board WHERE content LIKE ? ORDER BY ref DESC, step ASC";
+			String searchQuery = "SELECT * FROM board WHERE content LIKE ? and STEP3 >=? and STEP3 <= ? ORDER BY step3 ASC";
 			pstmt = conn.prepareStatement(searchQuery);
 			pstmt.setString(1, "%"+search_text+"%");
 		}

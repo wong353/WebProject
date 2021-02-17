@@ -8,19 +8,29 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
-<meta charset="UTF-8">
 <title>입력</title>
 </head>
 
 <style type="text/css">
-#top-left{
+#top-left {
 	border-right: 1px solid gray;
+	float: left;
+	margin-left: 200px;
+	width: 709px;
+	padding-right: 20px;
+}
+
+#top-right {
+	float: right;
+	width: 900px;
+	padding-left: 20px;
+	padding-right: 0 px;
+	margin-right: 0px;
+	height: 600px;
 }
 
 </style>
-
-
-
+<script type="text/javascript" src="./js/shop_details_size.js"></script>
 <body>
 	<%@ include file="/include/dbconn.jsp" %>
 	
@@ -28,31 +38,38 @@
 	
 	<%  
 		try {
-		String sql = "SELECT * FROM product";
-							
+		String p_id = request.getParameter("p_id");
+		
+		String sql = "SELECT * FROM product where p_id=?";	
 		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, p_id);
 		rs = pstmt.executeQuery();
-		if(rs.next()) {															
+		if(rs.next()) {
+			String thumbnail = rs.getString("p_thumbnail");
+			String name = rs.getString("p_name");
+			String unitPrice = rs.getString("p_unitPrice");
+			String fileName_detail1 = rs.getString("p_fileName_detail1");
+			String description = rs.getString("p_description");
 	%>
 	<div id="details-body" style="margin-top: 63px; ">
 			<div id="content">
 				<div id="content-body">
 					<div id="top">
-						<div id="top-left"	style="float: left; margin-left: 200px; width: 709px; padding-right: 20px;">
+						<div id="top-left">
 							<div id="left-main">
-								<a href=""><img alt="main" src="<%=rs.getString("p_thumbnail")%>"></a>
+								<a href=""><img alt="main" src="<%=thumbnail%>"></a>
 							</div>
 						</div>	
-						<div id="top-right"	style="float: right; width: 900px; padding-left: 20px; padding-right:0 px; margin-right:0px; height: 600px;">
+						<div id="top-right">
 							<div id="table-opt">
-								<table border="0" height="100px">
+								<table height="100px">
 									<tr>
-										<td><h3><%=rs.getString("p_name")%></h3></td>
+										<td><h3><%=name%></h3></td>
 									</tr>
 									<tr>
 										<td>
 											<div class="tb-details" style="float: left;">
-												<%=rs.getString("p_unitPrice")%> 원 <!-- → <span style="color: #ff0000;">54,300원</span>
+												<%=unitPrice%> 원 <!-- → <span style="color: #ff0000;">54,300원</span>
 												(적 1,700원) -->
 											</div>
 										</td>
@@ -62,21 +79,31 @@
 									<table border="0" style="margin-bottom: 500px;">
 										<tr>
 											<td>SIZE</td>
-											<td><select name="size-opt">
+											<td>
+												<select name="size-opt" id="size-opt" onchange="sizeFunc()">
 													<option checked>옵션 선택</option>
-													<option>S</option>
-													<option>M</option>
-													<option>L</option>
-													<option>XL</option>
-											</select></td>
+													<option value="0">S</option>
+													<option value="1">M</option>
+													<option value="2">L</option>
+													<option value="3">XL</option>
+												</select>
+											</td>
 										</tr>
 										<tr>
+											<td colspan="2"><div style="border-bottom: 1px solid gray"></div></td>
+										</tr>
+										<%%>
+										<tr>
+											<td colspan="2"></td>
+										</tr>
+										<% %>
+										<tr>
 											<td>총 상품 금액</td>
-											<td><strong><%=rs.getString("p_unitPrice")%></strong>원</td>
+											<td><strong><%=unitPrice%></strong>원</td>
 										</tr>
 										<tr>
 											<td colspan="2"><input type="button" value="BUY NOW">
-												<input type="button" value="ADD TO CART" onclick="toCart()">
+												<input type="button" value="ADD TO CART" onclick="location.href='addToCart_process.jsp?p_id=<%=p_id%>'">
 												<input type="button" value="WISH LIST" onclick="wish()">
 												<input type="button" value="Q&A" onclick="qna()"></td>
 										</tr>
@@ -86,7 +113,7 @@
 						</div>
 					</div>
 					<div style="margin-left: 80px; border-bottom: 1px solid gray;  " >
-						<img alt="Image" src="<%=rs.getString("p_fileName_detail1")%>" style="margin-top:100px;">
+						<img alt="Image" src="<%=fileName_detail1%>" style="margin-top:100px;">
 						<table style="text-align: center; width: 923px; margin: 0 auto;" border="0">
 							<tbody>
 								<tr>
@@ -138,7 +165,7 @@
 						</table>
 					</div>
 					<h3>DESCIPTION</h3>
-					<h1><%=rs.getString("p_description")%></h1>
+					<h1><%=description%></h1>
 				</div>
 			</div>
 		</div>

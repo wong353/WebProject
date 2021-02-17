@@ -8,11 +8,11 @@
 <head>
 <meta charset="UTF-8">
 <title>GARMENTDYING OFFICIAL SITE</title>
-<link rel="stylesheet" type="text/css" href="stylesheet/header_cate.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/header_cate2.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/all.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/header.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
+<link rel="stylesheet" type="text/css" href="./stylesheet/header_cate.css">
+<link rel="stylesheet" type="text/css" href="./stylesheet/header_cate2.css">
+<link rel="stylesheet" type="text/css" href="./stylesheet/all.css">
+<link rel="stylesheet" type="text/css" href="./stylesheet/header.css">
+<link rel="stylesheet" type="text/css" href="./stylesheet/footer.css">
 <%
 	String sql2 = "select p_id from product";
 	pstmt = conn.prepareStatement(sql2);
@@ -31,7 +31,39 @@
 
 <style type="text/css">
 table{
-	width: 70%;
+	margin: 0;
+	pading: 0;
+	width: 1500px;
+	border-collapse: collapse;
+}
+
+th{
+	text-align: center;	
+	height: 20px;
+}
+
+tr{
+	text-align: left;
+}
+
+td{
+	min-width: 70px;
+	padding: 0 0 0 5px;
+}
+#btwrap{
+	margin-left:5px;
+	padding-top: 50px;
+	border-right-style: hidden;
+	border-bottom-style: hidden;
+	border-top-style: hidden;
+}
+#actionbt{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	color: #000;
+	background-color: white;
 }
 
 .thumb{
@@ -43,11 +75,11 @@ table{
 </head>
 <body>
 
-
 <%@ include file="/include/header.jsp" %>
+<%@ include file="/include/loginSessionPass.jsp" %>
 	
 	<form action="">
-		<table width="1000">
+		<table border="1">
 			<tr>
 				<th>상품아이디</th>
 				<th>상품명</th>
@@ -62,7 +94,7 @@ table{
 				<th>디테일사진1</th>						
 				<th>디테일사진2</th>						
 				<th>디테일사진3</th>						
-				<th>디테일사진4</th>						
+				<th>디테일사진4</th>		
 			</tr>
 
 			<%
@@ -97,14 +129,14 @@ table{
 				<td><%=p_category%></td>
 				<td><%=p_unitsInStock%></td>
 				<td><%=p_condition%></td>
-				<td><img alt="이미지없음" src="<%=p_thumbnail%>" class="thumb"></td>
-				<td><img alt="이미지없음" src="<%=p_fileName1%>" class="thumb"></td>
-				<td><img alt="이미지없음" src="<%=p_fileName2%>" class="thumb"></td>
-				<td><img alt="이미지없음" src="<%=p_fileName3%>" class="thumb"></td>
-				<td><img alt="이미지없음" src="<%=p_fileName4%>" class="thumb"></td>
-				<td><a href="modifyProduct.jsp?p_id=<%=p_id%>">수정</a> / 
-				<input type="button" onclick="prod_delete()" value="삭제"> 
-				<a href="deleteProduct_process.jsp?p_id=<%=p_id%>">삭제</a></td>
+				<td><img alt="" src="<%=p_thumbnail%>" class="thumb"></td>
+				<td><img alt="" src="<%=p_fileName1%>" class="thumb"></td>
+				<td><img alt="" src="<%=p_fileName2%>" class="thumb"></td>
+				<td><img alt="" src="<%=p_fileName3%>" class="thumb"></td>
+				<td><img alt="" src="C:\Project\1024\WebContent\image\1.jpg" class="thumb"></td>
+				<td id="btwrap"><a href="modifyProduct.jsp?p_id=<%=p_id%>">수정</a> / 
+				<input type="button" onclick="prod_delete()" value="삭제" id="actionbt"> 
+				</td>
 			</tr>
 			<%
 				}
@@ -117,9 +149,6 @@ table{
 				if(conn!=null) conn.close();
 			}
 			%>
-			<tr>
-			<td><input type="button" value="돌아가기" onclick="history.back()"></td>		
-			</tr>
 		</table>
 	</form>
 	

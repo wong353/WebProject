@@ -33,7 +33,7 @@
 	String rsize = Arrays.toString(size);
 	String color = multi.getParameter("color");
 	String description = multi.getParameter("description");
-	String category = multi.getParameter("category");
+	String category = multi.getParameter("category2");
 	String unitsInStock = multi.getParameter("unitsInStock");
 	String condition = multi.getParameter("condition");
 	
@@ -120,7 +120,7 @@
 			out.print("</script>");
 
 	} catch (Exception e) {
-		out.println("입력 실패");
+		e.printStackTrace();
 		out.println(e.getMessage());
 	} finally {
 		if (pstmt != null)
