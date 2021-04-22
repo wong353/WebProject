@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="./js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+		Number.prototype.format = function() {
+			if (this == 0)
+				return 0;
+
+			var reg = /(^[+-]?\d+)(\d{3})/;
+			var n = (this + '');
+
+			while (reg.test(n))
+				n = n.replace(reg, '$1' + ',' + '$2');
+
+			return n;
+		};
+
+		String.prototype.format = function() {
+			var num = parseFloat(this);
+			if (isNaN(num))
+				return "0";
+
+			return num.format();
+		};
+
+		var basic_amount = parseInt('74000');
+
+		function change_qty2(t) {
+			//var min_qty = '수량버튼'*1;
+			var min_qty = 1;
+			var this_qty = $("#ct_qty").val() * 1;
+			var max_qty = '200'; // 현재 재고
+			if (t == "m") {
+				this_qty -= 1;
+				if (this_qty < min_qty) {
+					//alert("최소구매수량 이상만 구매할 수 있습니다.");
+					alert("수량은 1개 이상 입력해 주십시오.");
+					return;
+				}
+			} else if (t == "p") {
+				this_qty += 1;
+				if (this_qty > max_qty) {
+					alert("죄송합니다. 재고가 부족합니다.");
+					return;
+				}
+			}
+
+			var show_total_amount = basic_amount * this_qty;
+			//$("#ct_qty_txt").text(this_qty); 
+			$("#ct_qty").val(this_qty);
+			$("#it_pay").val(show_total_amount);
+			$("#total_amount").html(show_total_amount.format());
+		}
+	</script>
+</head>
+<style>
+.content_right {
+	margin: 20px;
+	width: 520px;
+	padding-top: 30px;
+}
+
+.content_right h2 {
+	font-size: 32px;
+	height: 50px;
+	color: #444;
+	line-height: 1;
+	border-bottom: 1px solid #dfdfdf;
+}
+
+.content_right dl {
+	display: table;
+	width: 100%;
+}
+
+.content_right dl dt {
+	display: table-cell;
+	vertical-align: top;
+	width: 20%;
+}
+
+.content_right dl dd {
+	display: table-cell;
+	vertical-align: top;
+	width: 80%;
+}
+</style>
+<script src=""></script>
+<body>
+	<div class="content_right">
+		<h2>수량표시 + / -</h2>
+		<dl>
+			<dt>정가</dt>
+			<dd>￦200,000</dd>
+		</dl>
+		<dl>
+			<dt>판매가</dt>
+			<dd>￦160,000</dd>
+		</dl>
+		<dl>
+			<dt>플러스 마이너스</dt>
+			<dd>
+				<div class="qty">
+					<div class="plus">
+						<a href="javascript:change_qty2('p')"><img
+							src="/images/sub/plus.jpg" alt="+"></a>
+					</div>
+					<input type="text" name="ct_qty" id="ct_qty" value="1"
+						readonly="readonly">
+					<div class="minus">
+						<a href="javascript:change_qty2('m')"><img
+							src="/images/sub/minus.jpg" alt="-"></a>
+					</div>
+				</div>
+			</dd>
+		</dl>
+		<dl>
+			<dt>총 금액</dt>
+			<dd id="total_amount">74,000</dd>
+		</dl>
+	</div>
+
+	
+</body>
+</html>

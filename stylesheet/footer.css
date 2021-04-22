@@ -1,15 +1,22 @@
 @charset "UTF-8";
 
-
-#footer_wrap{
-	width:1900px;
-	height:auto;
-	background-color: black;
+#footer {
+	height: 150px;
+	/* position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 15px 0; */
+	text-align: center;
+	background: black;
+	color: white;
 }
-ul li{
+
+ul li {
 	list-style-type: none;
 }
-p, font{
-	font-family: 'Arita-dotum','Open Sans', sans-serif;
+
+p, font {
+	font-family: 'Arita-dotum', 'Open Sans', sans-serif;
 	color: #808080;
 }

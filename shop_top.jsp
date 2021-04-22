@@ -22,11 +22,26 @@
 	right: 0;
 	stop: 0;
 }
+
+#shop_banner, #shop_bannerwords{
+	text-align: center;
+}
+
+.item .prd-brand, .item .prd-name, .item .prd-price, .item .prd-desc {
+	text-align: center;
+}
+	
 </style>
 <body>
 	<%@ include file="/include/dbconn.jsp"%>
 	<%@include file="/include/header.jsp"%>
-	
+<%-- 	<%
+		String preUrl = request.getRequestURL().toString();
+		if(request.getQueryString() != null)
+			preUrl = preUrl + "?" + request.getQueryString();
+	%>
+	<input type ="hidden" name="preUrl" value=<%=preUrl%>>
+ --%>	
 	<div id="shop_banner">
 		<a href="lookbook.jsp"><img alt="banner" src="./image/banner.png" id="banner"></a>
 	</div>

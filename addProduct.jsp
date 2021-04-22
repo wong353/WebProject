@@ -11,11 +11,32 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
+<script src="./include/jquery-3.5.1.js"></script>
 <script lang="javascript" type ="text/javascript" src ="./js/check_addProduct.js"></script>
 <script type="text/javascript">
-function duplicationCheck() {
-		
-}
+	$(function() {
+		$("select[name=category]").change(function() {
+			const temp = $("select[name=category2]");
+			const a = $(this).val();
+			temp.children().remove();
+			temp.append('<option value="">선택</option>');
+
+			if (a == 'top') {
+				temp.append('<option value="mtm">mtm</option>');
+				temp.append('<option value="shirts">shirts</option>');
+				temp.append('<option value="t-shirts">t-shirts</option>');
+				temp.append('<option value="hood">hood</option>');
+			}
+			if (a == 'bottom') {
+				temp.append('<option value="pants">pants</option>');
+				temp.append('<option value="shorts">shorts</option>');
+			}
+			if (a == 'outer') {
+				temp.append('<option value="coat">coat</option>');
+				temp.append('<option value="jacket">jacket</option>');
+			}
+		});
+	});
 </script>
 <style type="text/css">
 </style>
@@ -66,10 +87,16 @@ function duplicationCheck() {
 		<tr>
 			<td>분류</td>
 			<td>
-				Top<input type="radio" name="category" id="category" value="top">
-				Bottom<input type="radio" name="category" id="category" value="bottom">
-				ACC.<input type="radio" name="category" id="category" value="acc">
-			 </td>
+				<select id="category" name="category" onchange="cateChange()">
+					<option value="">선택</option>
+					<option value="top">top</option>
+					<option value="bottom">bottom</option>
+					<option value="outer">outer</option>
+				</select>
+				<select id="category2" name="category2">
+					<option value="">선택</option>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td>재고수</td>

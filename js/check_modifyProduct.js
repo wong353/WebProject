@@ -70,12 +70,14 @@ function checkModifyProduct() {
 	}	
 	
 	// 상품 분류 체크
-	
 	if(!modifyProduct.category.value){
 		alert("[분류]\n분류를 체크하세요");
 		return false;
 	}
-				
+	if(modifyProduct.category2.value === "") {
+		alert("[분류]\n분류를 체크하세요");
+		return false;
+	}
 	
 	// 재고 수 체크
 	if(unitsInStock.value==""){
@@ -90,7 +92,6 @@ function checkModifyProduct() {
 		return false;
 	}
 	
-	
 	// 상품 상태 체크
 	var count3=0;
 		
@@ -102,7 +103,6 @@ function checkModifyProduct() {
 			alert("[상태]\n상태를 체크하세요");
 			return false;
 		}
-	
 		
 	function check(regExp, e, msg) {
 

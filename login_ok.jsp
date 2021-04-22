@@ -12,9 +12,8 @@
 <body>
 	<%
 	request.setCharacterEncoding("utf-8");
-
-	PrintWriter script = response.getWriter();
-
+	
+	String preUrl = request.getParameter("preUrl");
 	String id = request.getParameter("id");
 	String pwd = request.getParameter("pwd");
 
@@ -24,25 +23,50 @@
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, id);
 		rs = pstmt.executeQuery();
-
-		if (!rs.equals(id) || !rs.equals(pwd)) {
-			script.println("<script>");
-			script.println("alert('정보가 틀렸습니다')");
-			script.println("location.href='login.jsp'");
-			script.println("</script>");
-		}
-		if (rs.next()) {
+		
+		PrintWriter script = response.getWriter();
+		
+		if(rs.next()){
 			String userno = rs.getString("userno");
 			String rid = rs.getString("id");
 			String rpwd = rs.getString("password");
 			String loginName = rs.getString("name");
-
-			if (id.equals(rid) && pwd.equals(rpwd)) {
-			session.setAttribute("userno", userno);	//	유저 고유 번호
-			session.setAttribute("id", id);	// 아이디
-			session.setAttribute("loginName", loginName);	// 이름
-			response.sendRedirect("main.jsp");
+			if (!id.equals(rid) || !pwd.equals(rpwd)){
+				script.println("<script>");
+				script.println("alert('아이디 혹은 비밀번호가 틀렸습니다')");
+				script.println("</script>");
+				%>
+				<form name="hiddenFrm" action="login.jsp"  method="post">
+					<input type="text" name="preUrl" value=<%=preUrl%>>
+				</form>
+				<script type="text/javascript">
+					document.hiddenFrm.submit();
+				</script>
+				<%
+			} else{
+				session.setAttribute("userno", userno);	//	유저 고유 번호
+				session.setAttribute("id", id);	// 아이디
+				session.setAttribute("loginName", loginName);	// 이름
+				if(!preUrl.contains("mypage")){
+					response.sendRedirect(preUrl);
+				}
+				else if(preUrl.contains("mypage")){
+					preUrl = preUrl + "?userno=" + userno;
+					response.sendRedirect(preUrl);
+				}
 			}
+		} else{
+			script.println("<script>");
+			script.println("alert('아이디 혹은 비밀번호가 틀렸습니다')");
+			script.println("</script>");
+			%>
+			<form name="hiddenFrm" action="login.jsp"  method="post">
+				<input type="text" name="preUrl" value=<%=preUrl%>>
+			</form>
+			<script type="text/javascript">
+				document.hiddenFrm.submit();
+			</script>
+			<%
 		}
 	} catch (Exception e) {
 		out.println("실패");
@@ -56,5 +80,5 @@
 			conn.close();
 	}
 	%>
-
+	</body>
 </html>

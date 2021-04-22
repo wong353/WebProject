@@ -3,84 +3,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="stylesheet/header_cate.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/header_cate2.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/all.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/header.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/header_cate.css"/>
+<link rel="stylesheet" type="text/css" href="stylesheet/header_cate2.css"/>
+<link rel="stylesheet" type="text/css" href="stylesheet/all.css"/>
+<link rel="stylesheet" type="text/css" href="stylesheet/header.css"/>
+<link rel="stylesheet" type="text/css" href="stylesheet/footer.css"/>
+<link rel="stylesheet" type="text/css" href="stylesheet/cart.css?after"/>
+<link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet"/>
 <meta charset="UTF-8">
-<title>입력</title>
+<title>Garment Dying</title>
+<script src="./js/jquery-3.6.0.min.js"></script>
 </head>
-<style type="text/css">
-#cart-wrapper{
-	width: 1200px;
-	margin: 0 auto;
-}
-#cart_content{
-	width: 1200px;
-	margin: 0 auto;
-	margin-bottom: 200px;
-}
-#cart_content th tr td{
-	font-weight: 10pt;
-}
-#head_subject{
-	float: left;
-	padding-left: 40px;
-	color: black;
-	font-weight: bold;
-	display: block;
-    font-size: 1.17em;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-</style>
-
-
 <body>
 	<%@ include file="/include/dbconn.jsp"%>
-	<%@include file="/include/loginSessionPass.jsp" %>
+	<%@include file="/include/loginSessionPass.jsp"%>
 	<%@include file="/include/header.jsp"%>
 	<%
 		request.setCharacterEncoding("utf-8");
-	
+		int totalPrice = 0;
+		int finalPrice = 0;
+		
+		try{
 		int i = 0;
+		int itemCount = 1; // session 에 저장해야 초기화가 안될듯
+		String itemCountStr = request.getParameter("itemCount");
+		if(itemCountStr != null){
+			itemCount = Integer.parseInt(itemCountStr);
+		}
 		
-		String sql = "SELECT id, p_name, p_unitPrice, amount, p_unitPrice*amount as price FROM member m, product p, cart c WHERE m.id=c.userid and p.p_id=c.product_id";
-		
-		
+		String cartId = (String)session.getAttribute("id");
+	
+		String sql = "SELECT id, p_name, p_unitPrice, product_id, amount, product_size, p_thumbnail, p_unitPrice*amount as price FROM member m, product p, cart c WHERE m.id=c.user_id and p.p_id=c.product_id and m.id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, cartId);
+		rs = pstmt.executeQuery();
+
 	%>
-		<form action="">
-			<div id="cart-wrapper">
-				<h3 id="head_subject">CART</h3>
-				<div id="cart-table">
-						<table id="cart_content">
-						<th>NO.</th>
-						<th>PRODUCT</th>
-						<th>TITLE</th>
-						<th>AMOUNT</th>
-						<th>PRICE</th>
-						<th>CANCEL</th>
-						<%-- <%while(true){ %> --%>
-						<tr>
-							<%-- <% if(true){ %><td colspan="6" style="padding:30px 0;"> 장바구니가 비어 있습니다.</td><%}%> --%>
-							
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-						<%-- <%} %> --%>
-					</table>
+	<form action="">
+		<div id="cart-wrapper">
+			<h3 id="head_subject">CART</h3>
+			<div id="cart-table">
+				<ul class="cart-container">
+					<% 
+						if(rs==null || rs.isBeforeFirst()==false){	// 쿼리의 결과의 커서가 첫 row 바로 앞이면 true, 바로 앞이 아니거나 결과 row가 없으면 false. 해당 rs 메소드만 동시 실행 가능.
+					%>
+						<div>장바구니가 비었습니다.</div>
+					<%
+						} else{
+							while(rs.next()){
+								out.print("<li class='cart-goods'>");		
+								String p_name = rs.getString("p_name");
+								String p_unitPrice = rs.getString("p_unitPrice");
+								String p_id = rs.getString("product_id");
+								String p_size = rs.getString("product_size");
+								String p_thumbnail = rs.getString("p_thumbnail");
+								int unitPrice = Integer.parseInt(p_unitPrice); 
+					%>
+						<div class="goods-thumb">
+							<img src="<%=p_thumbnail%>" alt="Retro Resin Col V2">
+						</div>
+						<div class="cart-info-box">
+							<div class="item-info">
+								<dl>
+									<dt class="info-name"><%=p_name%> (<%=p_size%>)</dt>
+									<dd class="info-price"><%=unitPrice%></dd>
+								</dl>
+								<button class="item-remove" type="button" data-id="2" onclick="location.href='cartDel.jsp?p_id=<%=p_id%>&p_size=<%=p_size%>'">Remove</button>
+							</div>
+							<div class="item-control">
+								<div class="item-count">
+									<button class="count-minus" type="button" data-id="2" data-value="minus" onclick="location.href='cart_itemMinus.jsp?itemCount=<%=itemCount%>'">
+										<i class="bx bx-minus"></i>
+									</button>
+									<span class="count"><%=itemCount%></span>
+									<button class="count-plus" type="button" data-id="2" data-value="plus" onclick="location.href='cart_itemPlus.jsp?itemCount=<%=itemCount%>'">
+										<i class="bx bx-plus"></i>
+									</button>
+								</div>
+								<strong class="single-total-price"> <%finalPrice= unitPrice*itemCount;%><%=finalPrice%> </strong>
+							</div>
+						</div>
+					<%	
+						finalPrice = unitPrice*itemCount;
+						totalPrice += finalPrice;
+						out.print("</li>");
+							}
+						}
+					%>
+				</ul>
+				<div class="cart-total">
+					<dl class="total">
+					<%
+						if(totalPrice != 0){
+					%>
+						<dt class="total-title">Total</dt>
+						<dd class="total-price"><%=totalPrice%></dd>
+					<%}%>
+					</dl>
 				</div>
 			</div>
-		</form>
-		
+		</div>
+	</form>
+	<%
+	} catch(Exception e){
+					e.printStackTrace();
+					out.println(e.getMessage());
+				} finally{
+					if (rs != null)	rs.close();
+					if (pstmt != null) pstmt.close();
+					if (conn != null) conn.close();
+				}
+	%>
 	<%@include file="/include/footer.jsp"%>
 </body>
 </html>

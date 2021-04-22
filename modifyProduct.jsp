@@ -23,16 +23,16 @@ table {
 <script type="text/javascript">
 	$(function() {
 		$("select[name=category]").change(function() {
-			var temp = $("select[name=category2]");
-			var a = $(this).val();
+			const temp = $("select[name=category2]");
+			const a = $(this).val();
 			temp.children().remove();
 			temp.append('<option value="">선택</option>');
 
 			if (a == 'top') {
-				temp.append('<option value="sweat">sweat</option>');
 				temp.append('<option value="mtm">mtm</option>');
 				temp.append('<option value="shirts">shirts</option>');
 				temp.append('<option value="t-shirts">t-shirts</option>');
+				temp.append('<option value="hood">hood</option>');
 			}
 			if (a == 'bottom') {
 				temp.append('<option value="pants">pants</option>');
@@ -50,36 +50,43 @@ table {
 
 	<%@ include file="/include/dbconn.jsp"%>
 	<%@ include file="/include/admin.jsp"%>
-
 	<%@include file="/include/header.jsp"%>
 
 	<%
 		request.setCharacterEncoding("utf-8");
 
-	String p_id = request.getParameter("p_id");
+		String p_id = request.getParameter("p_id");
 
-	try {
+		try {
 
-		String sql = "SELECT * FROM product WHERE p_id=?";
+			String sql = "SELECT * FROM product WHERE p_id=?";
 
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, p_id);
-		rs = pstmt.executeQuery();
-		while (rs.next()) {
-			String rp_id = rs.getString("p_id");
-			String p_name = rs.getString("p_name");
-			int p_unitPrice = rs.getInt("p_unitPrice");
-			String p_size = rs.getString("p_size");
-			String p_color = rs.getString("p_color");
-			String p_description = rs.getString("p_description");
-			String p_category = rs.getString("p_category");
-			String p_unitsInStock = rs.getString("p_unitsInStock");
-			String p_condition = rs.getString("p_condition");
-			String p_thumbnail = rs.getString("p_thumbnail");
-			String p_fileName1 = rs.getString("p_fileName_detail1");
-			String p_fileName2 = rs.getString("p_fileName_detail2");
-			String p_fileName3 = rs.getString("p_fileName_detail3");
-			String p_fileName4 = rs.getString("p_fileName_detail4");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p_id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+		String rp_id = rs.getString("p_id");
+		String p_name = rs.getString("p_name");
+		int p_unitPrice = rs.getInt("p_unitPrice");
+		String p_size = rs.getString("p_size");
+		String p_color = rs.getString("p_color");
+		String p_description = rs.getString("p_description");
+		String p_categoryB = rs.getString("p_category");
+		String p_categoryA = "";
+		if (p_categoryB.equals("mtm") || p_categoryB.equals("shirts") || p_categoryB.equals("t-shirts")  || p_categoryB.equals("hood")) {
+			p_categoryA = "top";
+		} else if (p_categoryB.equals("pants")  || p_categoryB.equals("shorts")) {
+			p_categoryA = "bottom";
+		} else if (p_categoryB.equals("coat")  || p_categoryB.equals("jacket"))  {
+			p_categoryA = "outer";
+		}
+		String p_unitsInStock = rs.getString("p_unitsInStock");
+		String p_condition = rs.getString("p_condition");
+		String p_thumbnail = rs.getString("p_thumbnail");
+		String p_fileName1 = rs.getString("p_fileName_detail1");
+		String p_fileName2 = rs.getString("p_fileName_detail2");
+		String p_fileName3 = rs.getString("p_fileName_detail3");
+		String p_fileName4 = rs.getString("p_fileName_detail4");
 	%>
 
 	<form name="modifyProduct" action="modifyProduct_process.jsp"
@@ -127,14 +134,17 @@ table {
 			</tr>
 			<tr>
 				<td>분류</td>
-				<td><select id="category" name="category" onchange="cateChange()">
+				<td>
+					<select id="category" name="category" onchange="cateChange()">
 						<option value="">선택</option>
-						<option value="top">top</option>
-						<option value="bottom">bottom</option>
-						<option value="outer">outer</option>
-				</select> <select id="category2" name="category2">
+						<option value="top" <%if(p_categoryA.equals("top")){%> selected <%}%>>top</option>
+						<option value="bottom" <%if(p_categoryA.equals("bottom")){%> selected <%}%>>bottom</option>
+						<option value="outer" <%if(p_categoryA.equals("outer")){%> selected <%}%>>outer</option>
+					</select>
+					<select id="category2" name="category2">
 						<option value="">선택</option>
-				</select></td>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>재고수</td>
@@ -173,9 +183,10 @@ table {
 				<td><input type="file" name="image4"></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="button"
-					onclick="checkModifyProduct()" value="수정"><input
-					type="button" onclick="cancel()" value="취소"></td>
+				<td colspan="2">
+					<input type="button" onclick="checkModifyProduct()" value="수정">
+					<input type="button" onclick="cancel()" value="취소">
+				</td>
 			</tr>
 		</table>
 	</form>

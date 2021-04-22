@@ -12,9 +12,16 @@
 	
 	if (session.getAttribute("id") != null) {
 		userid = (String) session.getAttribute("id");
+	} else{
+		response.sendRedirect("login.jsp");
 	}
 	if (!userid.equals("admin")) {
-		response.sendRedirect("login.jsp");
+	%>
+	<script type="text/javascript">
+		alert("접근이 불가합니다! 메인 페이지로 돌아갑니다.");
+		location.href="main.jsp";
+	</script>
+	<%
 	}
 	%>
 </body>

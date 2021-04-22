@@ -91,7 +91,7 @@
 		pstmt.setString(10, productId);
 		pstmt.executeUpdate();
 		
-		if(!thumbnail.equals("./image/null")){	// 이미지를 만약 수정할 경우에는 업데이트 쿼리 추가
+		if(!thumbnail.equals("./image/null") && !image1.equals("./image/null") && !image2.equals("./image/null") && !image3.equals("./image/null") && !image4.equals("./image/null")){	// 이미지를 만약 수정할 경우에는 업데이트 쿼리 추가
 			String sql2 = "update product set p_thumbnail=?, p_fileName_detail1=?, p_fileName_detail2=?, p_fileName_detail3=?, p_fileName_detail4=? where p_id=?";
 			
 			pstmt.close();
@@ -103,13 +103,36 @@
 			pstmt.setString(5, image3);
 			pstmt.setString(6, productId);
 			pstmt.executeUpdate();
+		}else if(!thumbnail.equals("./image/null") && !image1.equals("./image/null") && !image2.equals("./image/null") && !image4.equals("./image/null")){	
+			String sql2 = "update product set p_thumbnail=?, p_fileName_detail1=?, p_fileName_detail2=?, p_fileName_detail3=? where p_id=?";
 			
-			String success="<script> alert('사진까지 수정 성공했습니다!')</script>";
+			pstmt.close();
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setString(1, thumbnail);
+			pstmt.setString(2, image4);
+			pstmt.setString(3, image1);
+			pstmt.setString(4, image2);
+			pstmt.setString(5, productId);
+			pstmt.executeUpdate();
+		}else if(!thumbnail.equals("./image/null") && !image1.equals("./image/null") && !image4.equals("./image/null")){	
+			String sql2 = "update product set p_thumbnail=?, p_fileName_detail1=?, p_fileName_detail2=? where p_id=?";
 			
-			out.print(success);
-			if(!success.isEmpty()){
-				response.sendRedirect("productList.jsp");	
-			}
+			pstmt.close();
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setString(1, thumbnail);
+			pstmt.setString(2, image4);
+			pstmt.setString(3, image1);
+			pstmt.setString(4, productId);
+			pstmt.executeUpdate();
+		} else if(!thumbnail.equals("./image/null") && !image4.equals("./image/null")){	
+			String sql2 = "update product set p_thumbnail=?, p_fileName_detail1=? where p_id=?";
+			
+			pstmt.close();
+			pstmt = conn.prepareStatement(sql2);
+			pstmt.setString(1, thumbnail);
+			pstmt.setString(2, image4);
+			pstmt.setString(3, productId);
+			pstmt.executeUpdate();
 		}
 			
 			/* response.sendRedirect("modifyProduct_process2.jsp"); */

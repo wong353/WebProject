@@ -30,7 +30,6 @@
 }
 
 </style>
-<script type="text/javascript" src="./js/shop_details_size.js"></script>
 <body>
 	<%@ include file="/include/dbconn.jsp" %>
 	
@@ -39,6 +38,10 @@
 	<%  
 		try {
 		String p_id = request.getParameter("p_id");
+		String u_id = (String)session.getAttribute("id");
+		String preUrl = request.getRequestURL().toString();
+		if(request.getQueryString() != null)
+			preUrl = preUrl + "?" + request.getQueryString();
 		
 		String sql = "SELECT * FROM product where p_id=?";	
 		pstmt = conn.prepareStatement(sql);
@@ -50,7 +53,26 @@
 			String unitPrice = rs.getString("p_unitPrice");
 			String fileName_detail1 = rs.getString("p_fileName_detail1");
 			String description = rs.getString("p_description");
+			String p_size = rs.getString("p_size");
 	%>
+	<script type="text/javascript">
+		'use strict';
+		function check_shop_detail() {
+	
+			// size 체크
+			if (shop.p_size.value === "옵션 선택") {
+				alert("사이즈를 선택해주세요!");
+				return false;
+			}
+			let getId = '<%=u_id%>';
+			if(getId == "null"){
+				alert("로그인이 필요합니다");
+				location.href = 'login.jsp?preUrl=<%=preUrl%>';
+			}else{
+				shop.submit();
+			}
+		}
+	</script>
 	<div id="details-body" style="margin-top: 63px; ">
 			<div id="content">
 				<div id="content-body">
@@ -75,35 +97,34 @@
 										</td>
 									</tr>
 								</table>
-								<form action="">
+								<form action="addToCart_process.jsp" name="shop">
+									<input type="hidden" value="<%=p_id%>" name="p_id"> 
 									<table border="0" style="margin-bottom: 500px;">
 										<tr>
 											<td>SIZE</td>
 											<td>
-												<select name="size-opt" id="size-opt" onchange="sizeFunc()">
-													<option checked>옵션 선택</option>
-													<option value="0">S</option>
-													<option value="1">M</option>
-													<option value="2">L</option>
-													<option value="3">XL</option>
+												<select name="p_size" id="p_size">
+													<option>옵션 선택</option>
+													<%if(p_size.indexOf("S")>0) {%><option value="S">S</option><%}%>
+													<%if(p_size.indexOf("M")>0) {%><option value="M">M</option><%}%>
+													<%if(p_size.indexOf("L")>0) {%><option value="L">L</option><%}%>
+													<%if(p_size.indexOf("F")>0) {%><option value="FREE">FREE</option><%}%>
 												</select>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2"><div style="border-bottom: 1px solid gray"></div></td>
 										</tr>
-										<%%>
 										<tr>
 											<td colspan="2"></td>
 										</tr>
-										<% %>
 										<tr>
 											<td>총 상품 금액</td>
 											<td><strong><%=unitPrice%></strong>원</td>
 										</tr>
 										<tr>
 											<td colspan="2"><input type="button" value="BUY NOW">
-												<input type="button" value="ADD TO CART" onclick="location.href='addToCart_process.jsp?p_id=<%=p_id%>'">
+												<input type="button" value="ADD TO CART" onclick="check_shop_detail();">
 												<input type="button" value="WISH LIST" onclick="wish()">
 												<input type="button" value="Q&A" onclick="qna()"></td>
 										</tr>

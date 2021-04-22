@@ -45,7 +45,7 @@ table {
 </style>
 
 <body>
-	<%@ include file = "/include/dbconn.jsp" %>
+	<%@include file = "/include/dbconn.jsp" %>
 	
 	<%@include file="/include/loginSessionPass.jsp" %>
 
@@ -211,7 +211,8 @@ table {
 											<option value="2020" <% if(birthYear.equals("2021")) { %> selected <% }%>>2021</option> --%>
 											<%
 												int i = 0;
-												for(i = 1932; i <= 2021; i++){ String i2 = String.valueOf(i);
+												for(i = 1932; i <= 2021; i++){
+													String i2 = String.valueOf(i);
 											%>	<option value="<%=i%>" <% if(birthYear.equals(i2)) { %> selected <%} %>><%=i%></option>
 											<%
 												}

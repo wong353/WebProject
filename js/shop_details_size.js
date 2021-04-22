@@ -1,6 +1,5 @@
-function sizeFunc(){
-	let s = document.getElementById("size-opt");
-	let sizeVar = s.options[s.selectedIndex].value;
-	alert(sizeVar);
+function sizeFunc() {
+	const s = document.getElementById("size-opt");
+	const sizeVar = s.options[s.selectedIndex].value;
 }
 
