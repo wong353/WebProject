@@ -25,15 +25,15 @@
 		
 		try{
 		int i = 0;
-		int itemCount = 1; // session 에 저장해야 초기화가 안될듯
-		String itemCountStr = request.getParameter("itemCount");
-		if(itemCountStr != null){
-			itemCount = Integer.parseInt(itemCountStr);
-		}
+		int amount = 0; 
+		/* String amountStr = request.getParameter("amount");
+		if(amountStr != null){
+			amount = Integer.parseInt(amountStr);
+		} */
 		
 		String cartId = (String)session.getAttribute("id");
 	
-		String sql = "SELECT id, p_name, p_unitPrice, product_id, amount, product_size, p_thumbnail, p_unitPrice*amount as price FROM member m, product p, cart c WHERE m.id=c.user_id and p.p_id=c.product_id and m.id=?";
+		String sql = "SELECT id, p_name, p_unitPrice, product_id, amount, product_size, p_thumbnail,amount, p_unitPrice*amount as price FROM member m, product p, cart c WHERE m.id=c.user_id and p.p_id=c.product_id and m.id=?";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, cartId);
 		rs = pstmt.executeQuery();
@@ -57,6 +57,7 @@
 								String p_id = rs.getString("product_id");
 								String p_size = rs.getString("product_size");
 								String p_thumbnail = rs.getString("p_thumbnail");
+								amount = rs.getInt("amount");
 								int unitPrice = Integer.parseInt(p_unitPrice); 
 					%>
 						<div class="goods-thumb">
@@ -68,23 +69,23 @@
 									<dt class="info-name"><%=p_name%> (<%=p_size%>)</dt>
 									<dd class="info-price"><%=unitPrice%></dd>
 								</dl>
-								<button class="item-remove" type="button" data-id="2" onclick="location.href='cartDel.jsp?p_id=<%=p_id%>&p_size=<%=p_size%>'">Remove</button>
+								<button class="item-remove" type="button" onclick="location.href='cartDel.jsp?p_id=<%=p_id%>&p_size=<%=p_size%>'">Remove</button>
 							</div>
 							<div class="item-control">
 								<div class="item-count">
-									<button class="count-minus" type="button" data-id="2" data-value="minus" onclick="location.href='cart_itemMinus.jsp?itemCount=<%=itemCount%>'">
+									<button class="count-minus" type="button" >
 										<i class="bx bx-minus"></i>
 									</button>
-									<span class="count"><%=itemCount%></span>
-									<button class="count-plus" type="button" data-id="2" data-value="plus" onclick="location.href='cart_itemPlus.jsp?itemCount=<%=itemCount%>'">
+									<span class="count"><%=amount%></span>
+									<button class="count-plus" type="button" onclick="location.href='cart_itemPlus.jsp?amount=<%=amount%>'">
 										<i class="bx bx-plus"></i>
 									</button>
 								</div>
-								<strong class="single-total-price"> <%finalPrice= unitPrice*itemCount;%><%=finalPrice%> </strong>
+								<strong class="single-total-price"> <%finalPrice= unitPrice*amount;%><%=finalPrice%> </strong>
 							</div>
 						</div>
 					<%	
-						finalPrice = unitPrice*itemCount;
+						finalPrice = unitPrice*amount;
 						totalPrice += finalPrice;
 						out.print("</li>");
 							}
