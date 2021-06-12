@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+a {
+	font-size: 9pt;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: none;
+}
+
+ #mainBn {
+	padding-left: 320px;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+}
+
+#cate-wrapper {
+	width: 1200px;
+	/* overflow: hidden; 하위 메뉴가 안나옴*/
+	margin: 0 auto;
+}
+
+#header_top {
+	position: relative;
+	z-index: 1;
+	margin-bottom: 0px;
+	z-index: 11;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	min-width: 1200px;
+	font-weight: bold;
+	background: #fff;
+}
+
+#cateline {
+	width: 300px;
+	float: left;
+}
+
+#logo {
+	margin-right: 50%;
+}
+
+#logmenu {
+	width: 300px;
+	float: right;
+}
+
+#header_space {
+	width: 1200px;
+	height: 80px;
+}

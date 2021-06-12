@@ -1,0 +1,30 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#header {
+	height: 100px;
+	background: #ddd;
+	position: relative;
+	z-index: 1;
+}
+
+#content-box {
+	min-height: 100%;
+	margin: -100px 0 -50px;
+}
+
+*html #content-box {
+	height: 100%;
+}
+
+#content {
+	padding: 100px 0 50px;
+}
+
+#footer {
+	height: 50px;
+	background: #ddd;
+}

@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+table {
+	font-family: Malgun Gothic;
+	font-size: 10pt;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	width: 1400px;
+	border-collapse: collapse;
+	margin-bottom: 60px;
+}
+
+tr {
+	border-top: 1px solid #444444;
+	border-bottom: 1px solid #444444;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+th, td {
+	margin-top: auto;
+	margin-bottom: auto;
+	padding: 10px;
+}
+
+th {
+	text-align: center;
+}
+
+#usr-subject {
+	padding-left: 230px;
+	margin-bottom: 50px;
+}
+
+usr_list {
+	text-align: left;
+}
+
+td {
+	min-width: 70px;
+}
+
+.usr_list {
+	color: #606663;
+}
+
+#searchMember {
+	text-align: left;
+}
+
+#btwrap {
+	margin-left: 5px;
+	padding-top: 50px;
+	border-right-style: hidden;
+	border-bottom-style: hidden;
+	border-top-style: hidden;
+}
+
+#actionbt {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	color: #000;
+	background-color: white;
+}
+
+.thumb {
+	width: 100px;
+	height: 100px;
+}
+
+b {
+	font-weight: 7px;
+}
+
+#number {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}

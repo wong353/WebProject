@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+table {
+	width: 100%;
+	margin: 0 auto;
+	margin-left: 0 !important;
+	border-collapse: collapse;
+	border-spacing: 0;
+	table-layout: fixed;
+	word-wrap: break-word;
+	word-break: keep-all;
+}
+
+p {
+	align-text: center;
+}
+
+/* 컨텐츠와 하단 바 위치 조정  */
+.main-contents{
+	min-height: 100%;
+	margin: -100px 0 -50px;
+}
+
+*html #main-contents {
+	height: 100%;
+}
+
+#content {
+	padding: 100px 0 50px;
+}
+/*  */
+
+#main_1200 {
+	clear: both;
+	width: 1200px;
+	margin: 0 auto;
+	padding-top: 4px;
+}
+
+.main_bn {
+	width: 1200px;
+	margin: 5px 0;
+	overflow: hidden;
+	padding: 0px;
+}
+
+.main_bn ul {
+	margin: 0;
+	padding: 0;
+}
+
+.main_bn li img {
+	width: 394px;
+	height: 248px;
+	display: block;
+	margin: 0 0 0 5px;
+	float: left;
+}
+
+/* 아이템 목록 */
+.item-wrap .item-list {
+	margin: 0px 0 0px -53px;
+	width: 1253px;
+}
+
+.item-wrap .item-list ul li .thumb img {
+	max-width: 260px;
+	min-height: 260px;
+	max-height: 320px;
+	text-align: center;
+	margin-bottom: 0px;
+	vertical-align: top;
+}
+
+.item .prd-brand, .item .prd-name, .item .prd-price {
+	text-align: center;
+}
+	

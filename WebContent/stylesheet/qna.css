@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+table, tr, td, a, b {
+	font-size: 11pt;
+	letter-spacing: 0.06em;
+}
+
+#subject {
+	padding-left: 210px;
+	margin-bottom: 50px;
+}
+
+#delSubject {
+	padding-left: 80px;
+}
+
+#qna-wrapper {
+	position: relative;
+	width: 1200px;
+	height: 0;
+	overflow: hidden;
+	padding-bottom: 56.26%;
+	margin: 0 auto;
+}
+
+#qna-table {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin-bottom: 0;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border-style: solid 2px gray;
+	border-left: 0;
+	border-right: 0;
+}
+
+tr {
+	border-top: 1px solid #d0caca;
+	border-bottom: 1px solid #d0caca;
+	border-left: 0;
+	border-right: 0;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+td {
+	text-align: center;
+	font-size: 10pt;
+	border-left: 0;
+	border-right: 0;
+	padding: 15px 0;
+}
+
+
+table .numTab, .subTab, .nameTab, .dateTab, .hitTab {
+	border-top-color: black;
+}
+
+table .numTab {
+	width: 60px;
+}
+
+table .subTab {
+	width: 700px;
+}
+
+table .nameTab {
+	width: 100px;
+}
+
+#labelTab {
+	border: 0;
+	text-align: left;
+}
+
+#searchBtn {
+	background-color: black;
+	color: white;
+	vertical-align: middle;
+	border: 0;
+	margin-left: 6px;
+	height: 21px;
+}
+
+#writeBtn {
+	background-color: black;
+	color: white;
+	vertical-align: middle;
+	border: 0;
+	height: 21px;
+}
+
+#qna-page {
+	border-bottom: 0px;
+}
