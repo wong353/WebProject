@@ -9,7 +9,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	
-	// String realFolder = "C:\\Project\\1024\\WebContent\\image"; //웹 어플리케이션상의 절대 경로
+	// String realFolder = "C:\\Project\\1024\\WebContent\\image"; //로컬 경로
 	String absolutePath = getServletContext().getRealPath("/"); //servlet상의 절대 경로
 	String encType = "utf-8"; //인코딩 타입
 	int maxSize = 10 * 1024 * 1024; //최대 업로드될 파일의 크기10Mb
@@ -25,7 +25,7 @@
 	String rsize = Arrays.toString(size);
 	String color = multi.getParameter("color");
 	String description = multi.getParameter("description");
-	String category = multi.getParameter("category");
+	String category = multi.getParameter("category2");
 	String unitsInStock = multi.getParameter("unitsInStock");
 	String condition = multi.getParameter("condition");
 
@@ -62,7 +62,8 @@
 	
 	String file1 = (String)files.nextElement();
 	String thumbnail = multi.getFilesystemName(file1);
-	
+	System.out.println(file1);
+	System.out.println(thumbnail);
 	String sql = "insert into product values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	pstmt = conn.prepareStatement(sql);

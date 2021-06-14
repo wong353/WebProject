@@ -94,24 +94,56 @@
 	try{
 	String availableId = "";
 	String idStr="";
+	String availableId2 = "";
 	int num;
 	String sql = "SELECT MAX(p_id) as max FROM product";
 	stmt = conn.createStatement();
 	rs = stmt.executeQuery(sql);
-	if(rs.next()){
+	// 여기부터해라
+	/* if(rs.next()){ // P00010
 		availableId = rs.getString("max");
-		String idInt = availableId.substring(availableId.lastIndexOf("0")+1);	// 제일 끝 숫자만 substring
-		idStr = availableId.substring(0,4);	// 제일 끝 숫자 제외한 나머지 substring
-		num = Integer.parseInt(idInt)+1;	// 안겹치게 +1
-		idStr += Integer.toString(num);	// 캐스팅 후 idStr과 결합
-	}
+			String idInt = availableId.substring(1);	// P제거
+			num = Integer.parseInt(idInt);	
+			out.print("<br>");
+			out.println(idInt);
+			out.print("<br>");
+			out.println(num);
+			if(num <= 8 && num > 0){	//P0008
+				idInt = availableId.substring(availableId.lastIndexOf("0")+1);
+				num = Integer.parseInt(idInt)+1;
+				idStr = availableId.substring(0,4);	// 제일 끝 숫자 제외한 나머지 substring
+				idStr += Integer.toString(num);	// 캐스팅 후 idStr과 결합
+			}else if(num <= 98 && num > 0 || num == 9){
+				
+			}
+			
+			out.println(idStr);
+			out.print("<br>");
+			
+			idStr += Integer.toString(num);	// 캐스팅 후 idStr과 결합
+			out.println(num);
+			out.print("<br>");
+			out.println(idStr); */
+			
+		/*  else if(availableId.length()==6 || availableId.equals("P00099")){	// P00099 까지 
+			String idInt = availableId.substring(4);	// 끝에 두자리 substring 
+			idStr = availableId.substring(0,2);	// idInt 제외한 나머지 substring
+			num = Integer.parseInt(idInt)+1;	// 안겹치게 +1
+			idStr += Integer.toString(num);	// 캐스팅 후 idStr과 결합
+		} else if(availableId.length()==7 || availableId.equals("P000999")){	// P000999 까지
+			String idInt = availableId.substring(4);	// 제일 끝 숫자만 substring
+			idStr = availableId.substring(0,1);	// idInt 제외한 나머지 substring
+			num = Integer.parseInt(idInt)+1;	// 안겹치게 +1
+			idStr += Integer.toString(num);	// 캐스팅 후 idStr과 결합
+		} */
+	//}
 %>
 <form name="newProduct" action="addProduct_process.jsp" enctype ="multipart/form-data" method="post">
 	<table border="0">
 		<caption><h3>상품 등록</h3></caption>
 		<tr>	
 			<td>상품아이디</td>
-			<td><input type="text" name="id" id="id" value=<%=idStr%>></td>
+			<td><input type="text" name="id" id="id" value=<%=idStr%> ></td>
 		</tr>
 		<tr>
 			<td>상품명</td>

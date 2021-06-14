@@ -62,9 +62,10 @@
 									request.setCharacterEncoding("utf-8");
 
 								try {
-									String sql = "SELECT * FROM product";
+									String sql = "SELECT * FROM product WHERE p_condition = ?";
 
 									pstmt = conn.prepareStatement(sql);
+									pstmt.setString(1, "new");
 									rs = pstmt.executeQuery();
 
 									int i = 0;

@@ -10,11 +10,11 @@
 				<nav id="topMenu">
 					<ul>
 						<li class="topMenuLi"><a class="menuLink" id="brandLink" href="">BRAND</a></li>
-						<li class="topMenuLi"><a class="menuLink" id="shopLink" href="shop.jsp">SHOP</a>
+						<li class="topMenuLi"><a class="menuLink" id="shopLink" href="shop_top.jsp">SHOP</a>
 							<ul class="submenu">
 								<li><a href="shop_top.jsp" class="submenuLink">TOP</a></li>
 								<li><a href="shop_bottom.jsp" class="submenuLink">BOTTOM</a></li>
-								<li><a href="shop_acc.jsp" class="submenuLink">ACC.</a></li>
+								<li><a href="shop_outer.jsp" class="submenuLink">OUTER</a></li>
 							</ul></li>
 						<li class="topMenuLi"><a class="menuLink" id="bookLink" href="">LOOKBOOK</a>
 							<ul class="submenu"></ul></li>

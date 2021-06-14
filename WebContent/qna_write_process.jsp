@@ -18,7 +18,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	String realFolder = "C:\\Project\\MyWeb\\WebContent\\image\\qna"; //웹 어플리케이션상의 절대 경로
+	String absolutePath = getServletContext().getRealPath("/"); //servlet상의 절대 경로
 	String encType = "utf-8"; //인코딩 타입
 	int maxSize = 10 * 1024 * 1024; //최대 업로드될 파일의 크기10Mb
 	String id ="";
@@ -29,7 +29,7 @@
 	try {
 		
 	File file = null;
-	MultipartRequest multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+	MultipartRequest multi = new MultipartRequest(request, absolutePath, maxSize, encType, new DefaultFileRenamePolicy());
 	
 	String subject = multi.getParameter("subject");
 	id = multi.getParameter("id");
@@ -42,11 +42,7 @@
 	Enumeration files = multi.getFileNames();
 
 	String file1 = (String) files.nextElement();
-	String qna_real = "./image/qna/";
-	String thumbnail = qna_real + multi.getFilesystemName(file1);
-	if (thumbnail.equals(qna_real + "null")) {
-		thumbnail = null;
-	}
+	String thumbnail =  multi.getFilesystemName(file1);
 	
 	String sql = "SELECT MAX(num) from board";
 	stmt = conn.createStatement();

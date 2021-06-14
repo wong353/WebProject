@@ -9,7 +9,6 @@
 </head>
 <body>
 <%
-	String suserid = "";
 	
 	if (session.getAttribute("id") == null) {
 		PrintWriter script = response.getWriter();

@@ -42,14 +42,12 @@
 					<%
 						try{
 						String sql = "SELECT * FROM product WHERE "+
-								"p_category = ? || p_category = ? || p_category = ? || p_category = ?";
+								"p_category = ? || p_category = ?";
 						
 						int i = 0;
 						pstmt = conn.prepareStatement(sql);
-						pstmt.setString(1, "mtm");
-						pstmt.setString(2, "shirts");
-						pstmt.setString(3, "t-shirts");
-						pstmt.setString(4, "hood");
+						pstmt.setString(1, "pants");
+						pstmt.setString(2, "shorts");
 						rs = pstmt.executeQuery();
 						while (rs.next()) {
 							if(i%4==0) out.print("<tr>");

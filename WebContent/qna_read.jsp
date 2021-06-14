@@ -27,17 +27,15 @@
 
 <%@include file="/include/QnA_IdCheck.jsp"%>
 
-<%@include file="/qna_hit_duplPrevent.jsp"%>
-
 <%
 	request.setCharacterEncoding("utf-8");
-
+	
 	int num = Integer.parseInt(request.getParameter("num"));
 	int pg = Integer.parseInt(request.getParameter("pg"));
 	
 	Date nowTime = new Date();
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-
+	
 	try{
 		// 삭제글에는 admin 제외 접근할 수 없도록
 		if(session.getAttribute("id")=="admin"){
@@ -60,12 +58,41 @@
 			}
 		}
 		
-		String cnt = "Update board set hit=hit+1 where num = ? ";
-		
-		pstmt = conn.prepareStatement(cnt);
-		pstmt.setInt(1, num);
-		pstmt.executeUpdate();
-		pstmt.close();
+		// 조회수 중복 방지
+		Cookie[] cookies = request.getCookies();
+		int visitor = 0;
+		String num2 = request.getParameter("num");	// 페이지번호
+		String idNum = id+num2;	// 페이지, 아이디별 구분할 수 있도록 두 변수를 더함 
+		for(Cookie cookie : cookies){
+			System.out.println(cookie.getName());
+			if(cookie.getName().equals("visit")){	// 쿠키들 중에 visit 이름이 있는지 확인
+				visitor = 1;
+				System.out.println("visit통과");
+				if(cookie.getValue().contains(idNum)){	// visit 안에 접속한 페이지 번호가 있는지 확인
+					System.out.println("visitNum통과");
+				} else{
+					cookie.setValue(cookie.getValue()+ "_" + idNum);
+					response.addCookie(cookie);
+					
+					String cnt = "Update board set hit=hit+1 where num = ? ";
+					
+					pstmt = conn.prepareStatement(cnt);
+					pstmt.setInt(1, num);
+					pstmt.executeUpdate();
+					// 쿠키에 페이지 번호가 없다면 추가해주고 카운트 늘리기
+				}
+			}
+		}
+		if(visitor == 0){
+			Cookie cookie1 = new Cookie("visit", idNum);
+			response.addCookie(cookie1);
+			
+			String cnt = "Update board set hit=hit+1 where num = ? ";
+			
+			pstmt = conn.prepareStatement(cnt);
+			pstmt.setInt(1, num);
+			pstmt.executeUpdate();
+		}
 		
 		String sql = "SELECT * FROM board WHERE num=?";
 		
@@ -87,7 +114,7 @@
 <div id="title-content">상품 사진을 첨부하시면 보다 원활한 답변이 가능합니다.</div>
 <form name="writeBoard" id="writeBoard" action="write_process.jsp" method="post" enctype="multipart/form-data">
 <input type="hidden" value="<%=sf.format(nowTime)%>" name="date">
-	<table border="0">
+	<table>
 		<tr>
 			<td id="labeltag">
 				<label id="subtitle">NAME:</label>
