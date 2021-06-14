@@ -48,6 +48,7 @@ body, a, b, table, tr, td, div{
 	background-color: white; /* 배경색을 흰색으로 설정 */
 	border: 0px; /* 테두리를 설정 */
 	margin-top: -1px; /* 위 칸의 하단 테두리와 아래칸의 상단 테두리가 겹쳐지도록 설덩 */
+	text-align: left;
 }
 
 .longLink2 { /* 좀 더 긴 메뉴 스타일 설정 */

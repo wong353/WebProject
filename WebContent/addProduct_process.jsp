@@ -9,13 +9,14 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	
-	String realFolder = "C:\\Project\\1024\\WebContent\\image"; //웹 어플리케이션상의 절대 경로
+	// String realFolder = "C:\\Project\\1024\\WebContent\\image"; //웹 어플리케이션상의 절대 경로
+	String absolutePath = getServletContext().getRealPath("/"); //servlet상의 절대 경로
 	String encType = "utf-8"; //인코딩 타입
 	int maxSize = 10 * 1024 * 1024; //최대 업로드될 파일의 크기10Mb
 	try{
 		
 	File file = null;
-	MultipartRequest multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+	MultipartRequest multi = new MultipartRequest(request, absolutePath, maxSize, encType, new DefaultFileRenamePolicy());
 
 	String productId = multi.getParameter("id");
 	String name = multi.getParameter("name");
@@ -48,23 +49,19 @@
 	Enumeration files = multi.getFileNames();
 	
 	String file5 = (String)files.nextElement();
-	String image4 = "./image/"+multi.getFilesystemName(file5);
-	if(image4.equals("./image/null")) image4 = null;
+	String image4 = multi.getFilesystemName(file5);
 	
 	String file4 = (String)files.nextElement();
-	String image3 = "./image/"+multi.getFilesystemName(file4);
-	if(image3.equals("./image/null")) image3 = null;
+	String image3 = multi.getFilesystemName(file4);
 	
 	String file3 = (String)files.nextElement();
-	String image2 = "./image/"+multi.getFilesystemName(file3);
-	if(image2.equals("./image/null")) image2 = null;
+	String image2 = multi.getFilesystemName(file3);
 	
 	String file2 = (String)files.nextElement();
-	String image1 = "./image/"+multi.getFilesystemName(file2);
-	if(image1.equals("./image/null")) image1 = null;
+	String image1 = multi.getFilesystemName(file2);
 	
 	String file1 = (String)files.nextElement();
-	String thumbnail = "./image/"+multi.getFilesystemName(file1);
+	String thumbnail = multi.getFilesystemName(file1);
 	
 	String sql = "insert into product values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
@@ -85,11 +82,10 @@
 	pstmt.setString(14, image1);
 	pstmt.executeUpdate();
 	
-	String success="<script> alert('등록 성공했습니다!')</script>";
-	out.print(success);
-	if(!success.isEmpty()){
-		response.sendRedirect("productList.jsp");	
-	}
+	out.print("<script>");
+	out.print("alert('등록 성공했습니다!');");
+	out.print("location.href='productList.jsp';");
+	out.print("</script>");
 	
 } catch (Exception e) {
 	e.printStackTrace();

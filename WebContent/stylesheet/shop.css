@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+#shop_bannerwords{
+	margin-bottom: 40px;
+}
+table{
+	width: 65%;
+	margin: auto;
+}
+#banner{
+	width: 1900px;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	overflow: auto;
+	right: 0;
+}
+
+.item{
+	font-size:10pt;
+	margin: 0;
+	padding: 0;
+}
+#shop_banner, #shop_bannerwords{
+	text-align: center;
+}
+
+/* .item .prd-brand, .item .prd-name, .item .prd-price, .item .prd-desc {
+	text-align: center;
+} */
+
+.prd-image{
+	height: 260px;
+	width: 260px;
+}
+
+.prd-name {
+    text-align: left;
+    font-size: 12px;
+    color: #000;
+    border-bottom: 0px solid #dedede;
+    line-height: 17px;
+    height: 17px;
+    display: inline-block;
+    width: 164px;
+    padding-left: 48px;
+    overflow: hidden;
+}
+
+.prd-price {
+    text-align: left;
+    color: #000;
+    font-weight: 400;
+    line-height: 15px;
+    font-size: 12px;
+    width: 164px;
+    padding: 5px 48px;
+}

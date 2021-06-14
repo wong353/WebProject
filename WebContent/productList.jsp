@@ -15,7 +15,9 @@
 <title>PRODUCT</title>
 </head>
 <style type="text/css">
-
+tr {
+	height: 90px;
+}
 </style>
 
 <script type="text/javascript">
@@ -141,6 +143,7 @@ function frm_action2(frm) {
 			String p_unitsInStock = rs.getString("p_unitsInStock");
 			String p_condition = rs.getString("p_condition");
 			String p_thumbnail = rs.getString("p_thumbnail");
+			/* if(p_thumbnail != null) p_thumbnail = absolutePath + p_thumbnail;  */ 
 			String p_fileName1 = rs.getString("p_fileName_detail1");
 			String p_fileName2 = rs.getString("p_fileName_detail2");
 			String p_fileName3 = rs.getString("p_fileName_detail3");
@@ -156,8 +159,24 @@ function frm_action2(frm) {
 									<td class="prd_list"><%=p_category%></td>
 									<td class="prd_list"><%=p_unitsInStock%></td>
 									<td class="prd_list"><%=p_condition%></td>
+									<%
+										if (p_thumbnail == null) {
+									%>
+									<td></td>
+									<%
+										} else {
+									%>
 									<td class="prd_list_img"><img alt="" src="<%=p_thumbnail%>" class="thumb"></td>
+									<%}%>
+									<%
+										if (p_fileName1 == null) {
+									%>
+									<td></td>
+									<%
+										} else {
+									%>
 									<td class="prd_list_img"><img alt="" src="<%=p_fileName1%>" class="thumb"></td>
+									<%}%>
 									<%
 										if (p_fileName2 == null) {
 									%>

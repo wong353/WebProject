@@ -14,11 +14,6 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/fileButton_small.css">
 <script lang="javascript" type="text/javascript" src="./js/check_modifyProduct.js"></script>
 <script type="text/javascript" src="./include/jquery-1.9.0.js"></script>
-<style type="text/css">
-table {
-	
-}
-</style>
 </head>
 <body>
 	<%@ include file="/include/dbconn.jsp"%>
@@ -90,6 +85,7 @@ table {
 				}
 				//
 	%>
+<!-- 자동 카테고리 변경 함수 -->
 <script type="text/javascript">
 	$(window).on('load',function(){
 	    const temp = $("select[name=category2]");
@@ -115,32 +111,7 @@ table {
 		$("#category2").val(b).prop("selected", true);
 	});
 </script>
-<script type="text/javascript">
-	const imgArr = [];
-	
-</script>
-<script type="text/javascript">
-			function nameChange(id) {	// this.id 파라미터로 받아오기
-				id_sub = id.substring(id.lastIndexOf("e")+1);	// substring으로 파라미터 숫자만 남기기
-				let i;
-				for(i=1; i < 6; i++){
-					if(id_sub == i){
-						let box = ".filebox"+id_sub;	// 모든 class에 반복문 적용되도록 class name + parameter
-						let fileTarget = $(box + ' .upload-hidden');
-						fileTarget.on('change', function() { // 값이 변경되면
-							if (window.FileReader) { // modern browser
-								var filename = $(this)[0].files[0].name;
-							} else { // old IE
-								var filename = $(this).val().split('/').pop().split(
-										'\\').pop(); // 파일명만 추출
-							} // 추출한 파일명 삽입 
-							$(this).siblings('.upload-name'+id_sub).val(filename);	//siblings(): 선택한 요소를 제외한 형제 요소를 모두 찾습니다.
-							// 이미지 컨테이너 및 input file 초기화
-						});
-					}
-				}
-			}
-</script>
+<!-- 카테고리 변경 함수 -->
 <script type="text/javascript">
 	$(function cateChange() {
 		$("select[name=category]").change(function() {
@@ -166,7 +137,31 @@ table {
 		});
 	});
 </script>
-
+<!-- 파일업로드명 변경 함수 -->
+<script type="text/javascript">
+			function nameChange(id) {	// this.id 파라미터로 받아오기
+				id_sub = id.substring(id.lastIndexOf("e")+1);	// substring으로 파라미터 숫자만 남기기
+				for(var i=1; i < 6; i++){
+					if(id_sub == i){
+						let box = ".filebox"+id_sub;	// 모든 class에 반복문 적용되도록 class name + parameter
+						let fileTarget = $(box + ' .upload-hidden');
+						fileTarget.on('change', function() { // 값이 변경되면
+							if (window.FileReader) { // modern browser
+								var filename = $(this)[0].files[0].name;
+							} else { // old IE
+								var filename = $(this).val().split('/').pop().split(
+										'\\').pop(); // 파일명만 추출
+							} // 추출한 파일명 삽입 
+							$(this).siblings('.upload-name'+id_sub).val(filename);	//siblings(): 선택한 요소를 제외한 형제 요소를 모두 찾습니다.
+							/* console.log("1: " + $(this).siblings('.upload-name'+id_sub).val()); */
+							$('#img'+id_sub).val(filename);
+							/* console.log("2: "+$('#img'+id_sub).val()); */
+						});
+					} 
+				} 
+			}
+</script>
+<!-- 파일업로드 삭제 함수 -->
 <script>
 	// 버튼 클릭 시 이미지 컨테이너, label 태그내의 이미지 명을 비워주기
 	function del(clicked_id) {
@@ -175,12 +170,26 @@ table {
 			if(clicked_id == i){
 				$("#ex_filename"+clicked_id).val("");
 				$(".upload-name"+clicked_id).val("파일선택");
+				$("#img"+clicked_id).val("");
 			}
 		}
+		console.log($('#img'+clicked_id).val());
 	};
 </script>
 	<form name="modifyProduct" action="modifyProduct_process.jsp"
 		enctype="multipart/form-data" method="post">
+		<input type="hidden" value=<%if(p_thumbnail!=""||!p_thumbnail.equals("")){%><%=p_thumbnail%><%}%> name="img1" id="img1">
+		<input type="hidden" value=<%if(p_fileName1!=""||!p_fileName1.equals("")){%><%=p_fileName1%><%}%> name="img2" id="img2">
+		<input type="hidden" value=<%if(p_fileName2!=""||!p_fileName2.equals("")){%><%=p_fileName2%><%}%> name="img3" id="img3">
+		<input type="hidden" value=<%if(p_fileName3!=""||!p_fileName3.equals("")){%><%=p_fileName3%><%}%> name="img4" id="img4">
+		<input type="hidden" value=<%if(p_fileName4!=""||!p_fileName4.equals("")){%><%=p_fileName4%><%}%> name="img5" id="img5">
+		
+		<input type="hidden" value=<%=p_thumbnail%> name="imgOrigin1">
+		<input type="hidden" value=<%=p_fileName1%> name="imgOrigin2">
+		<input type="hidden" value=<%=p_fileName2%> name="imgOrigin3">
+		<input type="hidden" value=<%=p_fileName3%> name="imgOrigin4">
+		<input type="hidden" value=<%=p_fileName4%> name="imgOrigin5">
+		
 		<table border="0">
 			<caption>
 				<h3>상품 수정</h3>
@@ -237,8 +246,9 @@ table {
 			</tr>
 			<tr>
 				<td>재고수</td>
-				<td><input type="text" name="unitsInStock" id="unitsInStock"
-					value="<%=p_unitsInStock%>"></td>
+				<td>
+					<input type="text" name="unitsInStock" id="unitsInStock" value="<%=p_unitsInStock%>">
+				</td>
 			</tr>
 			<tr>
 				<td>상태</td>
@@ -255,7 +265,7 @@ table {
 				<td>썸네일</td>
 				<td>
 					<div class="filebox1">
-						<input class="upload-name1" value=<%if(p_thumbnail!=""||!p_thumbnail.equals("")){%><%=p_thumbnail%><%}else{%>"파일선택"<%}%> disabled="disabled" name="thumbnail1">
+						<input class="upload-name1" value=<%if(p_thumbnail!=""||!p_thumbnail.equals("")){%><%=p_thumbnail%><%}else{%>"파일선택"<%}%> readonly="readonly" name="thumbnailImg">
 						<label for="ex_filename1">업로드</label> <input type="file" id="ex_filename1" class="upload-hidden" name="thumbnail2" accept="image/*" onclick="nameChange(this.id)">
 						<label class="preview-del" id="1" onclick="del(this.id)">삭제</label>
 					</div>
@@ -265,7 +275,7 @@ table {
 				<td>상품디테일1</td>
 				<td>
 					<div class="filebox2">
-						<input class="upload-name2" value=<%if(p_fileName1!=""||!p_fileName1.equals("")){%><%=p_fileName1%><%}else{%>"파일선택"<%}%> disabled="disabled" name="detail1">
+						<input class="upload-name2" value=<%if(p_fileName1!=""||!p_fileName1.equals("")){%><%=p_fileName1%><%}else{%>"파일선택"<%}%> readonly="readonly" name="detail1">
 						<label for="ex_filename2">업로드</label> <input type="file" id="ex_filename2" class="upload-hidden" name="detail1_file" accept="image/*" onclick="nameChange(this.id)">
 						<label class="preview-del" id="2" onclick="del(this.id)">삭제</label>
 					</div>
@@ -275,7 +285,7 @@ table {
 				<td>상품디테일2</td>
 				<td>
 					<div class="filebox3">
-						<input class="upload-name3" value=<%if(p_fileName2!=""||!p_fileName2.equals("")){%><%=p_fileName2%><%}else{%>"파일선택"<%}%> disabled="disabled" name="detail2">
+						<input class="upload-name3" value=<%if(p_fileName2!=""||!p_fileName2.equals("")){%><%=p_fileName2%><%}else{%>"파일선택"<%}%> readonly="readonly" name="detail2">
 						<label for="ex_filename3">업로드</label> <input type="file" id="ex_filename3" class="upload-hidden" name="detail2_file" accept="image/*" onclick="nameChange(this.id)">
 						<label class="preview-del" id="3" onclick="del(this.id)">삭제</label>
 					</div>
@@ -285,7 +295,7 @@ table {
 				<td>상품디테일3</td>
 				<td>
 					<div class="filebox4">
-						<input class="upload-name4" value=<%if(p_fileName3!=""||!p_fileName3.equals("")){%><%=p_fileName3%><%}else{%>"파일선택"<%}%> disabled="disabled" name="detail3">
+						<input class="upload-name4" value=<%if(p_fileName3!=""||!p_fileName3.equals("")){%><%=p_fileName3%><%}else{%>"파일선택"<%}%> readonly="readonly" name="detail3">
 						<label for="ex_filename4">업로드</label> <input type="file" id="ex_filename4" class="upload-hidden" name="detail3_file" accept="image/*" onclick="nameChange(this.id)">
 						<label class="preview-del" id="4" onclick="del(this.id)">삭제</label>
 					</div>
@@ -295,7 +305,7 @@ table {
 				<td>상품디테일4</td>
 				<td>
 					<div class="filebox5">
-						<input class="upload-name5" value=<%if(p_fileName4!=""||!p_fileName4.equals("")){%><%=p_fileName4%><%}else{%>"파일선택"<%}%> disabled="disabled" name="detail4">
+						<input class="upload-name5" value=<%if(p_fileName4!=""||!p_fileName4.equals("")){%><%=p_fileName4%><%}else{%>"파일선택"<%}%> readonly="readonly" name="detail4">
 						<label for="ex_filename5">업로드</label> <input type="file" id="ex_filename5" class="upload-hidden" name="detail4_file" accept="image/*" onclick="nameChange(this.id)">
 						<label class="preview-del" id="5" onclick="del(this.id)">삭제</label>
 					</div>

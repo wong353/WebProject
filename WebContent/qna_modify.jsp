@@ -127,12 +127,12 @@
 			<td>
 				<%if(thumbnail!=null){%>
 					<div id="image_container"><img alt="" src="<%=thumbnail%>"></div>
-				<%}%><br> 	
-				
+				<%}%>
+				<br> 	
 				<textarea rows="10" cols="30" name="content" id="content"><%=content%></textarea> 
 
 				<div class="filebox">
-					<input class="upload-name" value=<%if(thumb_sub1!=""||!thumb_sub1.equals("")){%><%=thumb_sub1%><%}else{%>"파일선택"<%}%> disabled="disabled" name="thumbnail2">
+					<input class="upload-name" id="upload-name" value=<%if(thumb_sub1!=""||!thumb_sub1.equals("")){%><%=thumb_sub1%><%}else{%>"파일선택"<%}%> readonly="readonly" name="thumbnail2">
 					<label for="ex_filename">업로드</label> <input type="file" id="ex_filename" class="upload-hidden" name="thumbnail1" accept="image/*" onchange="setThumbnail(event);">
 					<label class="preview-del" onclick="del()">삭제</label>
 				</div>

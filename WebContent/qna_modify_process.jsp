@@ -40,6 +40,11 @@
 	String dateNow = multi.getParameter("dateNow");
 	String thumbnail = multi.getFilesystemName("thumbnail1");	// 업로드된 파일명
 	String thumbnail2 = multi.getParameter("thumbnail2");		// input class="upload-name"의 value(기존 이미지에서 변경하지않을 때의 로직을 위한 코드)
+	%>
+	<script type="text/javascript">
+		alert(<%=thumbnail2%>);
+	</script>
+	<%
 	String imgOrigin = multi.getParameter("imgOrigin");			// 이미지의 경로 및 파일명(현재 저장된 db값)
 	String content = multi.getParameter("content");
 	String imgOriginSub = multi.getParameter("imgOriginSub");	// 기존 이미지의 순수 파일명(db값에서 경로만 substring한 파일명)
@@ -64,7 +69,8 @@
 	pstmt.executeUpdate();
 	pstmt.close();
 	
-	if(thumbnail != null && thumbnail != ""){	// 2. 업로드 파일 있을 경우 체크박스 상관없이 그리고 기존 파일 상관 없이 무조건 업로드
+	// 2. 업로드 파일 있을 경우 체크박스 상관없이 그리고 기존 파일 상관 없이 무조건 업로드
+	if(thumbnail != null && thumbnail != ""){	
 		String imgPath = "./image/qna/";
 		String realThumb = imgPath+thumbnail;
 		String sql2 = "UPDATE board SET thumbnail = ? where num = ?";
@@ -72,61 +78,43 @@
 		pstmt.setString(1, realThumb);
 		pstmt.setInt(2, num);
 		pstmt.executeUpdate();
-		%>
-		<script>
-			console.log('new upload');
-		</script>
-		<%
-	}else if(thumbnail == null && imgOrigin != null && imgOrigin != ""){	//1-3 기존 게시물은 있었는데 없애는 경우
+		
+	//1-3 기존 게시물은 있었는데 없애는 경우
+	}else if(thumbnail == null && imgOrigin != null && imgOrigin != "" && thumbnail2.equals("")){	
 		String sql2 = "UPDATE board SET thumbnail = null where num = ?";
 		pstmt = conn.prepareStatement(sql2);
 		pstmt.setInt(1, num);
 		pstmt.executeUpdate();
-		%>
-		<script>
-			console.log('change upload file');
-		</script>
-		<%
+		
 	}
-			if(imgOriginSub!=null || imgOriginSub!=""){	// 기존 이미지가 있어야하고, 
-				File FileList = new File(realFolder);
+	if(imgOriginSub!=null || imgOriginSub!=""){	// 기존 이미지가 있어야하고, 
+		File FileList = new File(realFolder);
 
-				// 해당 폴더의 전체 파일 배열화
-				String fileList[] = FileList.list();
+		// 해당 폴더의 전체 파일 배열화
+		String fileList[] = FileList.list();
 
-				// 전체 파일
-				for (int i = 0; i < fileList.length; i++) {
-					// 파일명 조회
-					String fileName = fileList[i];
-					%>
-					<script type="text/javascript">
-					console.log('<%=i%>:'+'<%=fileName%>');
-					</script>
-					<%
-					// 바꾸기 전 이미지명과 일치한 이미지를 찾아 삭제
-					if (fileName.equals(imgOriginSub)) {
-						File deleteFile = new File(realFolder + "\\" + fileName);
-						String s = deleteFile.getName();
-					%>
-						<script type="text/javascript">
-						console.log("imgOriginSub: "+'<%=imgOriginSub%>');
-						console.log("deleteFile: "+'<%=s%>');
-						</script>
-					<%
-			            Thread.sleep(1000);	// 파일을 삭제하려고 하니 파일은 존재하는데 파일 디스크립터를 이미 사용 중이여서 삭제 불가능으로 추정.. 해서 스레드 일시중단 시키고 삭제 진행
-						deleteFile.delete();
-						break;
-					}
-				}
+		// 전체 파일
+		for (int i = 0; i < fileList.length; i++) {
+			// 파일명 조회
+			String fileName = fileList[i];
+			
+			// 바꾸기 전 이미지명과 일치한 이미지를 찾아 삭제
+			if (fileName.equals(imgOriginSub)) {
+				File deleteFile = new File(realFolder + "\\" + fileName);
+				String s = deleteFile.getName();
+			
+	            Thread.sleep(50);	// 파일을 삭제하려고 하니 파일은 존재하는데 파일 디스크립터를 이미 사용 중이여서 삭제 불가능으로 추정.. 해서 스레드 일시중단 시키고 삭제 진행
+				deleteFile.delete();
+				break;
 			}
-		%>
-	<script>
-		console.log("끝난거:"+'<%=thumbnail%>'+","+'<%=imgOriginSub%>'+","+'<%=thumbnail2%>');
+		}
+	}
+	%>
+	<script type="text/javascript">
 		alert("게시글 변경에 성공했습니다.");
-		document.location.href = "qna.jsp?pg=<%=pg%>";
+		location.href = "qna.jsp?pg=<%=pg%>";
 	</script>
 	<%
-		
 	}catch(Exception e){
 		e.printStackTrace();
 		out.println(e.getMessage());

@@ -1,3 +1,4 @@
+<%@page import="java.text.NumberFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,30 +9,11 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/shop.css?after">
 <meta charset="UTF-8">
 <title>Garment Dying</title>
 </head>
 
-<style type="text/css">
-#banner{
-	width: 1900px;
-	bottom: 0;
-	left: 0;
-	margin: auto;
-	overflow: auto;
-	right: 0;
-	stop: 0;
-}
-
-#shop_banner, #shop_bannerwords{
-	text-align: center;
-}
-
-.item .prd-brand, .item .prd-name, .item .prd-price, .item .prd-desc {
-	text-align: center;
-}
-	
-</style>
 <body>
 	<%@ include file="/include/dbconn.jsp"%>
 	<%@include file="/include/header.jsp"%>
@@ -43,11 +25,11 @@
 	<input type ="hidden" name="preUrl" value=<%=preUrl%>>
  --%>	
 	<div id="shop_banner">
-		<a href="lookbook.jsp"><img alt="banner" src="./image/banner.png" id="banner"></a>
+		<a href=#><img alt="banner" src="./image/main_bn/shop_banner.jpg" id="banner"></a>
 	</div>
 	<div id="shop_bannerwords">
-		<a href="lookbook.jsp"> GARMENTDYING 2020 F/W DUCK AND COVER<br>
-			<span>CHAPTER 01 OFFICIAL LOOK</span><br>CLICK TO FEATURE
+		<a href=#> GARMENTDYING 2021 S/S RATS IN THE DESERT<br>
+			<span>CHAPTER 01 OFFICIAL LOOK</span><br>CLICK TO FEATURE <!-- 미구현  -->
 		</a>
 	</div>
 	<!-- top_banner -->
@@ -66,30 +48,30 @@
 						pstmt = conn.prepareStatement(sql);
 						rs = pstmt.executeQuery();
 						while (rs.next()) {
-							if(i%3==0) out.print("<tr>");
+							if(i%4==0) out.print("<tr>");
 							String p_id = rs.getString("p_id");
 							String thumb = rs.getString("p_thumbnail");
 							String name = rs.getString("p_name");
 							String unitPrice = rs.getString("p_unitPrice");
+							int unitPriceInt = Integer.parseInt(unitPrice); 
+							String unitPriceComma = NumberFormat.getInstance().format(unitPriceInt); // 천단위 콤마
 							String description = rs.getString("p_description");
 					%>
 						<td>
-							<ul class="item" style="font-size:10pt;">
-								<div class="box unfocused">
+							<ul class="item">
 									<li>
 										<div class="thumb">
-											<a href="shop_details_top.jsp?p_id=<%=p_id%>"><img src="<%=thumb%>"></a>
+											<a href="shop_details_top.jsp?p_id=<%=p_id%>"><img src="<%=thumb%>" class="prd-image"></a>
 										</div>
-									</li> <a href="shop_details_top.jsp"><li class="prd-desc"><span class="MK-product-icons"></span></li>
+									</li> <a href="shop_details_top.jsp"><li class="prd-desc"><span class=""></span></li>
 										<li class="prd-name"><%=name%></li>
-										<li class="prd-price"><%=unitPrice%>원</li>
-										<li class="prd-desc"><%=description%></li> </a>
-								</div>
+										<li class="prd-price"><%=unitPriceComma%>원</li>
+										 </a>
 							</ul>
 						</td>
 					<%
 						i++;
-						if(i%3==0) out.print("</tr>");
+						if(i%4==0) out.print("</tr>");
 						}
 					} catch (Exception e) {
 					e.printStackTrace();
