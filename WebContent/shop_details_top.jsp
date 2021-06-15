@@ -123,10 +123,10 @@
 											<td><strong><%=unitPrice%></strong>원</td>
 										</tr>
 										<tr>
-											<td colspan="2"><input type="button" value="BUY NOW">
+											<td colspan="2"><input type="button" value="BUY NOW" disabled="disabled">
 												<input type="button" value="ADD TO CART" onclick="check_shop_detail();">
-												<input type="button" value="WISH LIST" onclick="wish()">
-												<input type="button" value="Q&A" onclick="qna()"></td>
+												<input type="button" value="WISH LIST" disabled="disabled" onclick="wish()">
+												<input type="button" value="Q&A" disabled="disabled" onclick="qna()"></td>
 										</tr>
 									</table>
 								</form>

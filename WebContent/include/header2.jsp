@@ -46,7 +46,7 @@
 							%>
 							<li class="topMenuUser"><b><font color="red">관리자</font>
 									님</b></li>
-							<li class="topMenuLi2"><a class="menuLink2"	href="userlist.jsp">USERLIST</a></li>
+							<li class="topMenuLi2"><a class="menuLink2"	href="memberList.jsp">USERLIST</a></li>
 							<li class="topMenuLi2"><a class="menuLink2"	href="productList.jsp">PRODUCT</a>
 								<ul class="submenu2">
 									<li><a href="productList.jsp" class="submenuLink2">LIST</a></li>

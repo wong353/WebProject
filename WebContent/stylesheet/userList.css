@@ -29,12 +29,29 @@ th {
 	text-align: center;
 }
 
+#usr-wrapper {
+	position: relative;
+	height: 0;
+	overflow: hidden;
+	padding-bottom: 29%;
+	margin: 0 auto;
+}
+
+#usr-table {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin-bottom: 0;
+}
+
 #usr-subject {
-	padding-left: 230px;
+	text-align: center;
 	margin-bottom: 50px;
 }
 
-usr_list {
+.usr_list {
 	text-align: left;
 }
 
@@ -72,12 +89,24 @@ td {
 	height: 100px;
 }
 
-b {
-	font-weight: 7px;
+a, b {
+	font-size: 10pt;
+	letter-spacing: 0.06em;
 }
 
-#number {
+#member-page{
+	border-bottom: 0;
+}
+
+#searchBtn{
+	background-color: black;
+	color: white;
+	vertical-align: middle;
+	border: 0;
+	margin-left: 6px;
+	height: 21px;
+}
+
+#boardNum {
 	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
 }

@@ -12,28 +12,22 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script type="text/javascript">
-	let confirm = confirm('상품을 삭제하시겠습니까?');
-	if(confirm==false){
-		location.href=history.back(-1);
-	}
-</script>
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	String p_id = request.getParameter("p_id");
+	String userno = request.getParameter("userno");
 	String pg = request.getParameter("pg");
 	
 	try{
-		String sql = "DELETE FROM product WHERE p_id = ? ";
+		String sql = "DELETE FROM member WHERE userno = ?";
 		pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setString(1, p_id);
+		pstmt.setString(1, userno);
 		pstmt.executeUpdate();
 %>	
 		<script type="text/javascript">
 			alert('삭제 성공했습니다.');
-			location.href= productList.jsp?pg=<%=pg%>;
+			location.href= "userList.jsp?pg='<%=pg%>'";
 		</script>
 <%		
 	}catch (Exception e){

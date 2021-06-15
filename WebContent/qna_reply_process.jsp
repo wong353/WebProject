@@ -23,11 +23,11 @@
 			InetAddress inetAddress = InetAddress.getLocalHost(); //  InetAddress: IP 주소를 표현한 클래스(InetAddress 클래스의 생성자는 하나만 존재하지만, 특이하게 기본 생성자의 접근 제한자 default이기 때문에 new 연산자 객체를 생성할 수 없습니다. 따라서 InetAddress 클래스는 객체를 생성해 줄 수 있는 5개의 static 메서드를 제공하고 있습니다.)
 			ipAddress = inetAddress.getHostAddress(); // 5가지 메서드 중 하나인 getLocalHost 사용하여 로컬 호스트의 IP 주소 반환
 		}
-		String realFolder = "C:\\Project\\1024\\WebContent\\image\\qna\\reply"; //qna 하위 폴더 생성
+		String absolutePath = getServletContext().getRealPath("/"); //servlet상의 절대 경로
 		String encType = "utf-8";
 		int maxSize = 10 * 1024 * 1024;
 
-		MultipartRequest multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+		MultipartRequest multi = new MultipartRequest(request, absolutePath, maxSize, encType, new DefaultFileRenamePolicy());
 
 		File file = null;
 		
@@ -43,12 +43,8 @@
 		Enumeration files = multi.getFileNames();
 
 		String file1 = (String) files.nextElement();
-		String qna_real = "./image/qna/";
-		String thumbnail = qna_real + multi.getFilesystemName(file1);
-		if (thumbnail.equals(qna_real + "null")) {
-			thumbnail = null;
-		}
-
+		String thumbnail = multi.getFilesystemName(file1);
+		
 		int ref = 0; // 부모의 글번호를 저장하는 필드
 		int ref2 = 0; // 번호 정렬 시의 구분을 위해 가족번호로 묶는 필드 (변하지 않는 상수)
 		int indent = 0; // 원글의 답글인지 답글의 답글인지를 구분하는 들여쓰기 필드

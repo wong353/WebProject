@@ -1,12 +1,13 @@
 @charset "UTF-8";
 
 #footer {
-	height: 150px;
-	/* position: absolute;
+	margin-top: 100px;
+	margin-bottom: 0;
+	position: absolute;
 	left: 0;
-	bottom: 0;
+	/* bottom: 0; */
 	width: 100%;
-	padding: 15px 0; */
+	padding: 15px 0;
 	text-align: center;
 	background: black;
 	color: white;
@@ -20,3 +21,4 @@ p, font {
 	font-family: 'Arita-dotum', 'Open Sans', sans-serif;
 	color: #808080;
 }
+

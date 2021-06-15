@@ -51,8 +51,10 @@ table {
 } 
 
 </style>
-<%@include file = "./include/loginSessionExist.jsp" %>
+
 <body>
+	<%@include file = "./include/loginSessionExist.jsp" %>
+	
 	<%@include file="/include/dbconn.jsp"%>
 
 	<%@include file="/include/header.jsp"%>

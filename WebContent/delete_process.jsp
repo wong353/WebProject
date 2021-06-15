@@ -31,16 +31,6 @@
 		pstmt.setString(1, userno);
 		pstmt.executeUpdate();
 		
-		// 정렬 쿼리		
-		String arrange = "ALTER TABLE member AUTO_INCREMENT=1";
-		pstmt.executeUpdate(arrange);
-
-		String arrange2 = "SET @COUNT = 0;"; // count라는 변수를 선언 및 초기화(프로시저가 끝나도 계속 유지되는 값)
-		pstmt.executeUpdate(arrange2);
-		
-		String arrange3 = "UPDATE member SET num = @COUNT:=@COUNT+1"; // := 는 왼쪽 피연산자에 오른쪽 피연산자를 대입함.
-		pstmt.executeUpdate(arrange3);
-		
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('삭제 성공했습니다.이용에 감사드립니다.')");

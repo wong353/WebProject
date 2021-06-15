@@ -1,6 +1,6 @@
-<%@ page import = "java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +12,21 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/userList.css?ver=1.0">
-<style type="text/css">
-
-</style>
-
+<script type="text/javascript" src="./include/jquery-1.9.0.js"></script>
 </head>
+<script type="text/javascript">
+	function checkSearch() {
+		let txtVal = $('#search_text').val();
+		txtVal = txtVal.trim();    // 문자열 중간 제외 앞뒤 공백을 제거
+		if (!txtVal || txtVal == "") {
+			alert('단어를 입력해주세요!');
+			memberFrm.search_text.focus();
+			return false;
+		} else {
+			memberFrm.submit();
+		}
+	}
+</script>
 <body>
 <%@ include file = "/include/dbconn.jsp" %>
 <%@ include file = "/include/admin.jsp" %>
@@ -28,7 +38,7 @@
 
 
 	try{
-	final int ROWSIZE = 10; // 한페이지에 보일 게시물 수
+	final int ROWSIZE = 5; // 한페이지에 보일 게시물 수
 	final int BLOCK = 5; // 아래에 보일 페이지 최대개수 1~5 / 6~10 / 11~15 식으로 5개로 고정
 	
 	int pg = 1; //기본 페이지값
@@ -69,22 +79,8 @@
 		if(endPage > allPage) {
 			endPage = allPage;
 		}
-		
-		/* String sqlList = "SELECT num, name, subject, regist_day, hit, indent from board where STEP2 >=? and STEP2 <= ? order by step2 asc";
-		pstmt = conn.prepareStatement(sqlList);
-		pstmt.setInt(1, start);
-		pstmt.setInt(2, end);
-		rs = pstmt.executeQuery(); 
-		while(rs.next()){
-			int num = rs.getInt("num");
-			String name = rs.getString("name");
-			String subject = rs.getString("subject");
-			String regist_day = rs.getString("regist_day");
-			int hit = rs.getInt("hit");
-			int indent = rs.getInt("indent");
-		} */
 %>
-<form action="" method="get" name="memberFrm" >
+<form action="" method="post" name="memberFrm" >
 			<div id="usr-caption">
 				<div id="usr-subject">
 					<h3>USERLIST</h3>
@@ -92,6 +88,11 @@
 				<div id="usr-wrapper">
 					<div id="usr-table">
 							<table>
+								<tr style="border: 0;">
+									<td colspan="14" id="searchMember">
+											회원 수 : <%=total%> 명
+									</td>
+								</tr>	
 								<tr>
 									<th>회원번호</th>
 									<th>이름</th>
@@ -115,8 +116,10 @@
 	 	  						</tr>
 <%	} else {
 	
-		sql = "SELECT * FROM member ORDER by userno DESC";	
+		sql = "SELECT * FROM member WHERE userno >=? and userno <= ? ORDER by userno DESC";	
 		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, start);
+		pstmt.setInt(2, end);
 		rs = pstmt.executeQuery();
 		while(rs.next()){
 			int ruserno = rs.getInt("userno");
@@ -132,7 +135,7 @@
 			String tel = rs.getString("tel");
 %>	
 								<tr>
-									<td class="usr_list"><%=ruserno%></td>
+									<td class="usr_no"><%=ruserno%></td>
 									<td class="usr_list"><%=name%></td>
 									<td class="usr_list"><%=rid%></td>
 									<td class="usr_list"><%=nickname%></td>
@@ -143,20 +146,22 @@
 									<td class="usr_list"><%=addr_detail%></td>
 									<td class="usr_list"><%=addr_ref%></td>	
 									<td class="usr_list"><%=tel%></td>	
-									<td><a href="mypage.jsp?userno=<%=ruserno%>">수정</a> / 
-									<a href="delete.jsp?userno=<%=ruserno%>&id=<%=id%>">삭제</a></td>
+									<td>
+										<a href="mypage.jsp?userno=<%=ruserno%>&pg=<%=pg%>">수정</a> / 
+										<a href="deleteMember_process.jsp?userno=<%=ruserno%>&id=<%=id%>&pg=<%=pg%>">삭제</a>
+									</td>
 								</tr>
 <%
 		}
 	}
 %>
-							<tr>
-								<td align="center" colspan="5"> 
+							<tr id="member-page">
+								<td align="center" colspan="12" id="boardNum"> 
 									<%
 										if(pg>BLOCK) {
 									%>
-										<a href="userlist.jsp?pg=1">◀◀</a>
-										<a href="userlist.jsp?pg=<%=startPage-1%>">◀</a>
+										<a href="userList.jsp?pg=1">◀◀</a>
+										<a href="userList.jsp?pg=<%=startPage-1%>">◀</a>
 									<%
 										}
 									%>
@@ -165,11 +170,11 @@
 										for(int i=startPage; i<= endPage; i++){
 											if(i==pg){
 									%>
-												<div id="number"><b><%=i%></b></div>
+												<b><%=i%></b>
 									<%
 											}else{
 									%>
-												<a href="userlist.jsp?pg=<%=i%>"><%=i%></a>
+												<a href="userList.jsp?pg=<%=i%>"> <%=i%> </a>
 									<%
 											}
 										}
@@ -178,27 +183,11 @@
 									<%
 										if(endPage<allPage){
 									%>
-										<a href="userlist.jsp?pg=<%=endPage+1%>">▶</a>
-										<a href="userlist.jsp?pg=<%=allPage%>">▶▶</a>
+										<a href="userList.jsp?pg=<%=endPage+1%>">▶</a>
+										<a href="userList.jsp?pg=<%=allPage%>">▶▶</a>
 									<%
 										}
 									%>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="14" id="searchMember">
-									<label>
-										<input type="radio" value="rname" name="radio">이름
-									</label>
-									<label>
-										<input type="radio" value="rnick" name="radio" checked>닉네임
-									</label>
-									 <label>
-										<input type="radio" value="rusrno" name="radio">회원번호
-									</label>
-									<span class="key-wrap"> <input type="text" name="search_text" value="" class="MS_input_txt"><input type="submit" value="검색">
-									</span>
-									<p>회원 수 : <%=total%> 명 </p>
 								</td>
 							</tr>
 						</table>
@@ -217,7 +206,6 @@
 		if(conn!=null) conn.close();
 	}
 %>
-
 <%@include file="/include/footer.jsp" %>
 </body>
 </html>

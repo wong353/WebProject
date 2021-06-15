@@ -18,6 +18,7 @@
 	<%
 	request.setCharacterEncoding("utf-8");
 	
+	String pg = request.getParameter("pg");
 	// String realFolder = "C:\\Project\\MyWeb\\WebContent\\image\\product"; //웹 어플리케이션상의 절대 경로
 	String absolutePath = getServletContext().getRealPath("/"); //servlet상의 절대 경로
 	String encType = "utf-8"; //인코딩 타입
@@ -104,8 +105,8 @@
 	
 	String file5 = (String)files.nextElement();	// detail4
 	String image5 = multi.getFilesystemName(file5);	
-//	out.println("디테일4: "+image5);
-//  out.print("<br>");
+	System.out.println("경로: "+absolutePath);
+	System.out.print("<br>");
 	
 	String file4 = (String)files.nextElement();	// detail3
 	String image4 = multi.getFilesystemName(file4);
@@ -439,11 +440,13 @@
 					break;
 				}
 			}
-		}		
-		out.print("<script>");
-		out.print("alert('수정 성공했습니다!');");
-		out.print("location.href='productList.jsp';");
-		out.print("</script>");
+		}	
+	%>
+		<script type="text/javascript">
+			alert('수정 성공했습니다!');
+			location.href="productList.jsp?pg=<%=pg%>";
+		</script>
+	<%
 		
 	} catch (Exception e) {
 		e.printStackTrace();

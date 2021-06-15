@@ -9,16 +9,10 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/qna.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/productlist.css?ver=1.1">
 <meta charset="UTF-8">
 <title>PRODUCT</title>
 </head>
-<style type="text/css">
-tr {
-	height: 90px;
-}
-</style>
 
 <script type="text/javascript">
 /* function frm_action() {
@@ -41,7 +35,7 @@ function frm_action2(frm) {
 
 
 	try{
-	final int ROWSIZE = 10; // 한페이지에 보일 게시물 수
+	final int ROWSIZE = 6; // 한페이지에 보일 게시물 수
 	final int BLOCK = 5; // 아래에 보일 페이지 최대개수 1~5 / 6~10 / 11~15 식으로 5개로 고정
 	
 	int pg = 1; //기본 페이지값
@@ -83,28 +77,21 @@ function frm_action2(frm) {
 			endPage = allPage;
 		}
 		
-		/* String sqlList = "SELECT num, name, subject, regist_day, hit, indent from board where STEP2 >=? and STEP2 <= ? order by step2 asc";
-		pstmt = conn.prepareStatement(sqlList);
-		pstmt.setInt(1, start);
-		pstmt.setInt(2, end);
-		rs = pstmt.executeQuery(); 
-		while(rs.next()){
-			int num = rs.getInt("num");
-			String name = rs.getString("name");
-			String subject = rs.getString("subject");
-			String regist_day = rs.getString("regist_day");
-			int hit = rs.getInt("hit");
-			int indent = rs.getInt("indent");
-		} */
+		
 %>
 <form action="" method="get" name="myform" >
 			<div id="prd-caption">
 				<div id="prd-subject">
-					<h3>USERLIST</h3>
+					<h3>PRODUCTLIST</h3>
 				</div>
 				<div id="prd-wrapper">
 					<div id="prd-table">
 							<table>
+								<tr style="border: 0;">
+									<td colspan="14" id="searchPrd">
+											상품 수 : <%=total%> 개
+									</td>
+								</tr>	
 								<tr>
 									<th>상품아이디</th>
 									<th>상품명</th>
@@ -119,7 +106,8 @@ function frm_action2(frm) {
 									<th>디테일사진1</th>						
 									<th>디테일사진2</th>						
 									<th>디테일사진3</th>						
-									<th>디테일사진4</th>		
+									<th>디테일사진4</th>	
+									<th></th>		
 								</tr>				
 								
 <%
@@ -129,8 +117,17 @@ function frm_action2(frm) {
 	 	  						<td colspan="5">등록된 상품이 없습니다.</td>
 	 	  					</tr>
 <%	}else{
-		sql = "SELECT * FROM product order by p_id desc";	
+		/* sql = "SELECT p_id FROM product ORDER By p_id DESC";
 		pstmt = conn.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		while(rs.next()){
+			int idx = Integer.parseInt((rs.getString("p_id").substring(1)));
+			System.out.println(idx);
+		} */
+		sql = "select * from product where substring(p_id,2) >= ? and substring(p_id,2)<= ?"; // p_id 의 P를 substring 후 비교	
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, start);
+		pstmt.setInt(2, end);
 		rs = pstmt.executeQuery();
 		while(rs.next()){
 			String p_id = rs.getString("p_id");
@@ -205,16 +202,17 @@ function frm_action2(frm) {
 									<td class="prd_list_img"><img alt="" src="<%=p_fileName4%>" class="thumb"></td>
 									<%}%>
 									
-									<td id="btwrap"><a href="modifyProduct.jsp?p_id=<%=p_id%>">수정</a> / 
-									<input type="button" onclick="prod_delete()" value="삭제" id="actionbt"> 
+									<td>
+										<a href="modifyProduct.jsp?p_id=<%=p_id%>&pg=<%=pg%>">수정</a> / 
+										<a href="deleteProduct.jsp?p_id=<%=p_id%>&pg=<%=pg%>">삭제</a>
 									</td>
 								</tr>
 <%
 		}
 	}
 %>
-							<tr>
-								<td align="center" colspan="5"> 
+							<tr id="prd-page">
+								<td colspan="13"> 
 									<%
 										if(pg>BLOCK) {
 									%>
@@ -228,7 +226,7 @@ function frm_action2(frm) {
 										for(int i=startPage; i<= endPage; i++){
 											if(i==pg){
 									%>
-												<div id="number"><b><%=i%></b></div>
+												<b id="boardNum"><%=i%></b>
 									<%
 											}else{
 									%>
@@ -246,22 +244,6 @@ function frm_action2(frm) {
 									<%
 										}
 									%>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="14" id="searchContent">
-									<label>
-										<input type="radio" value="rname" name="radio">이름
-									</label>
-									<label>
-										<input type="radio" value="rsubject" name="radio" checked>제목
-									</label>
-									 <label>
-										<input type="radio" value="rcontent" name="radio">내용
-									</label>
-									<span class="key-wrap"> <input type="text" name="search_text" value="" class="MS_input_txt"><input type="submit" value="검색">
-									</span>
-									<p>총 상품 : <%=total%> 개 </p>
 								</td>
 							</tr>
 						</table>

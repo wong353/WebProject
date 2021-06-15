@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
-table, tr, td, a, b {
+table, tr, td {
 	font-size: 11pt;
 	letter-spacing: 0.06em;
 }
 
 #subject {
-	padding-left: 210px;
+	text-align: center;
 	margin-bottom: 50px;
 }
 
@@ -57,7 +57,6 @@ td {
 	padding: 15px 0;
 }
 
-
 table .numTab, .subTab, .nameTab, .dateTab, .hitTab {
 	border-top-color: black;
 }
@@ -88,6 +87,10 @@ table .nameTab {
 	height: 21px;
 }
 
+#prd-page {
+	border-bottom: 0;
+}
+
 #writeBtn {
 	background-color: black;
 	color: white;
@@ -98,4 +101,9 @@ table .nameTab {
 
 #qna-page {
 	border-bottom: 0px;
+}
+
+a, b {
+	font-size: 10pt;
+	letter-spacing: 0.06em;
 }

@@ -4,23 +4,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="stylesheet/qna.css?ver=1.0">
 <link rel="stylesheet" type="text/css" href="stylesheet/header_cate.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header_cate2.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/qna.css">
+<script type="text/javascript" src="./include/jquery-1.9.0.js"></script>
 <meta charset="UTF-8">
 <title>QnA</title>
 </head>
-<style type="text/css">
-table{
-	width: 70%;
-	margin: 0 auto;
-	
-}
-</style>
-
+<script type="text/javascript">
+	function checkSearch() {
+		let txtVal = $('#search_text').val();
+		txtVal = txtVal.trim();    // 문자열 중간 제외 앞뒤 공백을 제거
+		if (!txtVal || txtVal == "") {
+			alert('단어를 입력해주세요!');
+			myform.search_text.focus();
+			return false;
+		} else {
+			myform.submit();
+		}
+	}
+</script>
 <body>
 <%@ include file="/include/dbconn.jsp"%>
 	
@@ -118,16 +124,20 @@ table{
 	<%-- <input type="hidden" name="search_text" value="<%=search_text%>">
 	<input type="hidden" name="radio" value="<%=radio%>"> --%>
 	<div id="qna-caption">
-		<h3 style="margin:60px;">Q&A</h3>
+		<div id="subject">
+			<h3>Q&A</h3>
+		</div>
 		<div id="qna-wrapper">
 			<div id="qna-table">
-				<table border="1" width="500">
-					<th>NO.</th>
-					<th>SUBJECT</th>
-					<th>NAME</th>
-					<th>DATE</th>
-					<th>HITS</th>
-<%
+				<table border="1">
+				<tr>
+					<th class="numTab">NO.</th>
+					<th class="subTab">SUBJECT</th>
+					<th class="nameTab">NAME</th>
+					<th class="dateTab">DATE</th>
+					<th class="hitTab">HITS</th>
+				</tr>
+<%		
 	if(total==0){
 %>	
 	<tr align="center" bgcolor="#FFFFFF" height="30">
@@ -139,6 +149,8 @@ table{
 			String searchQuery = "SELECT * FROM board WHERE name LIKE ? and STEP3 >=? and STEP3 <= ? ORDER BY step3 ASC";
 			pstmt = conn.prepareStatement(searchQuery);
 			pstmt.setString(1, "%"+search_text+"%");
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 		}else if(radio.equals("rsubject")){
 			String searchQuery = "SELECT * FROM board WHERE subject LIKE ? and STEP3 >=? and STEP3 <= ? ORDER BY step3 ASC";
 			pstmt = conn.prepareStatement(searchQuery);
@@ -149,6 +161,8 @@ table{
 			String searchQuery = "SELECT * FROM board WHERE content LIKE ? and STEP3 >=? and STEP3 <= ? ORDER BY step3 ASC";
 			pstmt = conn.prepareStatement(searchQuery);
 			pstmt.setString(1, "%"+search_text+"%");
+			pstmt.setInt(2, start);
+			pstmt.setInt(3, end);
 		}
 		rs = pstmt.executeQuery();
 		while(rs.next()){
@@ -230,25 +244,24 @@ table{
 					<tr>
 						<td colspan="3" align="left">
 							<label>
-								<input type="radio" value="rname" name="radio">이름
+								<input type="radio" value="rname" name="radio" <%if(radio.equals("rname")){%> checked="checked"<%}%>>이름
 							</label>
 							<label>
-								<input type="radio" value="rsubject" name="radio" checked>제목
+								<input type="radio" value="rsubject" name="radio"  <%if(radio.equals("rsubject")){%> checked="checked"<%}%> >제목
 							</label>
 							 <label>
-								<input type="radio" value="rcontent" name="radio">내용
+								<input type="radio" value="rcontent" name="radio"  <%if(radio.equals("rcontent")){%> checked="checked"<%}%>>내용
 							</label>
-							<span class="key-wrap"> <input type="text" name="search_text" value="" class="MS_input_txt"><input type="submit" value="검색">
+							<span class="key-wrap"> <input type="text" name="search_text" id="search_text" value=""><input type="button" id="searchBtn" value="검색" onclick="checkSearch()">
 							</span>
 						</td>
-						<td colspan="2"><input type="button" value="글쓰기" onclick="window.location='qna_write.jsp?id=<%=id%>&pg=<%=pg%>'"></td>
+						<td colspan="2"><input type="button" value="글쓰기" id="writeBtn" onclick="window.location='qna_write.jsp?id=<%=id%>&pg=<%=pg%>'"></td>
 					</tr>
 				</table>
 			</div>
 		</div>
 	</div>
 </form>
-
 <%
 	}catch(Exception e){
 		out.println(e.getMessage());

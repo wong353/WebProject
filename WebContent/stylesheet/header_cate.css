@@ -72,6 +72,9 @@
 	height: 93px; /* 높이를 93px로 설정 */
 }
 
+#brandLink, #bookLink{
+	color: red;
+}
 /* .submenuLink:hover { 하위 메뉴의 a 태그의 마우스 오버 스타일 설정
 	color: red; 글씨색을 빨간색으로 설정
 	background-color: #dddddd; 배경을 RGB(DDDDDD)로 설정

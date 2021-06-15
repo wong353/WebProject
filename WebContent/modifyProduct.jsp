@@ -23,7 +23,7 @@
 		request.setCharacterEncoding("utf-8");
 
 		String p_id = request.getParameter("p_id");
-
+		String pg = request.getParameter("pg");
 		try {
 			String sql = "SELECT * FROM product WHERE p_id=?";
 			pstmt = conn.prepareStatement(sql);
@@ -176,7 +176,7 @@
 		console.log($('#img'+clicked_id).val());
 	};
 </script>
-	<form name="modifyProduct" action="modifyProduct_process.jsp"
+	<form name="modifyProduct" action="modifyProduct_process.jsp?pg=<%=pg%>"
 		enctype="multipart/form-data" method="post">
 		<input type="hidden" value=<%if(p_thumbnail!=""||!p_thumbnail.equals("")){%><%=p_thumbnail%><%}%> name="img1" id="img1">
 		<input type="hidden" value=<%if(p_fileName1!=""||!p_fileName1.equals("")){%><%=p_fileName1%><%}%> name="img2" id="img2">

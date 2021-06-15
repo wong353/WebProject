@@ -12,6 +12,7 @@
 	<%
 	request.setCharacterEncoding("utf-8");
 	
+	
 	String userno = request.getParameter("userno");
 	String name = request.getParameter("name");
 	String id = request.getParameter("id");
@@ -42,7 +43,17 @@
 		pstmt.setString(10, userno);		
 		pstmt.executeUpdate();
 		
-		out.println("수정이 완료되었습니다.");
+		String pg="s";
+		if(request.getParameter("pg")!=null){
+			pg = request.getParameter("pg");
+			System.out.println(pg);
+			response.sendRedirect("userList.jsp?pg="+pg);
+		}
+	%>
+		<script type="text/javascript">
+			alert(<%=pg%>');
+		</script>
+	<%
 		response.sendRedirect("main.jsp");
 
 	} catch (Exception e) {

@@ -18,6 +18,7 @@
 	File file = null;
 	MultipartRequest multi = new MultipartRequest(request, absolutePath, maxSize, encType, new DefaultFileRenamePolicy());
 
+	String pg = request.getParameter("pg");
 	String productId = multi.getParameter("id");
 	String name = multi.getParameter("name");
 	String unitPrice = multi.getParameter("unitPrice");
@@ -77,16 +78,19 @@
 	pstmt.setLong(8, stock);
 	pstmt.setString(9, condition);
 	pstmt.setString(10, thumbnail);
+	System.out.println(absolutePath);
 	pstmt.setString(11, image4);
 	pstmt.setString(12, image3);
 	pstmt.setString(13, image2);
 	pstmt.setString(14, image1);
 	pstmt.executeUpdate();
 	
-	out.print("<script>");
-	out.print("alert('등록 성공했습니다!');");
-	out.print("location.href='productList.jsp';");
-	out.print("</script>");
+	%>
+	<script type="text/javascript">
+		alert('등록 성공했습니다!');
+		location.href="productList.jsp?pg=<%=pg%>";
+	</script>
+	<%
 	
 } catch (Exception e) {
 	e.printStackTrace();
