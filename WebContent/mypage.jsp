@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/mypage.css">
 <style type="text/css">
 	.select_birthday{
 		disabled: disabled;
@@ -189,7 +190,7 @@ table {
 							<tr>
 								<td>*우편번호</td>
 								<td colspan="2"><input type="text" id="sample6_postcode" placeholder="우편번호" name="zip" value="<%=zip%>">
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td>
+							<input type="button" class="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td>
 							</tr>
 							<tr>
 								<td>*집주소</td>
@@ -213,9 +214,9 @@ table {
 							</tr> -->
 							<tr> 	
 								<td colspan="2"><p>
-										<input type="button" onclick="check_mypage()" value="확인"><input type="button" value="취소" onclick="cancel()"> </td>
+										<input type="button" onclick="check_mypage()" value="확인" class="button"><input type="button" value="취소" onclick="cancel()" class="button"> </td>
 								<td><p>
-										<input type="button" value="회원탈퇴" onclick="location.href='delete.jsp'"></td>
+										<input type="button" value="회원탈퇴" onclick="location.href='delete.jsp'" class="button"></td>
 						</table>
 					</div>
 				</div> 

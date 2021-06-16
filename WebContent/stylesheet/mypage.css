@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+.button{
+	background-color: #000000de;
+    color: white;
+    vertical-align: middle;
+    border: 0;
+    margin-left: 6px;
+    height: 23px;
+}

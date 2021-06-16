@@ -74,7 +74,8 @@ button {
 
 .cart-info-box .item-info .info-price {
     font-size: 1.1rem;
-     margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left:0;
 }
 
 .cart-info-box .item-info .item-remove{

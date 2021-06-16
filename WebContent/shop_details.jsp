@@ -8,28 +8,9 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/shop_detail.css">
 <title>입력</title>
 </head>
-
-<style type="text/css">
-#top-left {
-	border-right: 1px solid gray;
-	float: left;
-	margin-left: 200px;
-	width: 709px;
-	padding-right: 20px;
-}
-
-#top-right {
-	float: right;
-	width: 900px;
-	padding-left: 20px;
-	padding-right: 0 px;
-	margin-right: 0px;
-	height: 600px;
-}
-
-</style>
 <body>
 	<%@ include file="/include/dbconn.jsp" %>
 	
@@ -73,7 +54,7 @@
 			}
 		}
 	</script>
-	<div id="details-body" style="margin-top: 63px; ">
+	<div id="details-body">
 			<div id="content">
 				<div id="content-body">
 					<div id="top">
@@ -84,7 +65,7 @@
 						</div>	
 						<div id="top-right">
 							<div id="table-opt">
-								<table height="100px">
+								<table id="priceTable">
 									<tr>
 										<td><h3><%=name%></h3></td>
 									</tr>
@@ -99,9 +80,9 @@
 								</table>
 								<form action="addToCart_process.jsp" name="shop">
 									<input type="hidden" value="<%=p_id%>" name="p_id"> 
-									<table border="0" style="margin-bottom: 500px;">
+									<table style="margin-bottom: 500px;">
 										<tr>
-											<td>SIZE</td>
+											<td id="size">SIZE</td>
 											<td>
 												<select name="p_size" id="p_size">
 													<option>옵션 선택</option>
@@ -133,10 +114,16 @@
 							</div>
 						</div>
 					</div>
-					<div style="margin-left: 80px; border-bottom: 1px solid gray;  " >
-						<img alt="Image" src="<%=fileName_detail1%>" style="margin-top:100px;">
-						<table style="text-align: center; width: 923px; margin: 0 auto;" border="0">
+					<div id="detail-imageBox" style="">
+						<table style="" id="detailTable">
 							<tbody>
+								<tr>
+									<td colspan="5">
+										<div id="detail-img">
+											<img alt="Image" id="" src="<%=fileName_detail1%>">
+										</div>
+									</td>
+								</tr>
 								<tr>
 									<td class="prd-detail-size-notice" colspan="6">MODEL :	000CM 00KG / SIZE : LARGE</td>
 								</tr>
@@ -149,33 +136,33 @@
 								</tr>
 								<tr>
 									<td class="prd-detail-size-td"><span>S</span></td>
-									<td class="prd-detail-size-td"><span>52.0</span></td>
+									<td class="prd-detail-size-td"><span>00.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 								</tr>
 								<tr>
 									<td class="prd-detail-size-td"><span>M</span></td>
-									<td class="prd-detail-size-td"><span>52.0</span></td>
+									<td class="prd-detail-size-td"><span>00.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 								</tr>
 								<tr>
 									<td class="prd-detail-size-td"><span>L</span></td>
-									<td class="prd-detail-size-td"><span>52.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
-									<td class="prd-detail-size-td"><span>00.0</span></td>
-									<td class="prd-detail-size-td"><span>00.0</span></td>
-								</tr>
-								<tr>
-									<td class="prd-detail-size-td"><span>XL</span></td>
-									<td class="prd-detail-size-td"><span>52.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 									<td class="prd-detail-size-td"><span>00.0</span></td>
 								</tr>
 								<tr>
+									<td class="prd-detail-size-td"><span>FREE</span></td>
+									<td class="prd-detail-size-td"><span>00.0</span></td>
+									<td class="prd-detail-size-td"><span>00.0</span></td>
+									<td class="prd-detail-size-td"><span>00.0</span></td>
+									<td class="prd-detail-size-td"><span>00.0</span></td>
+								</tr>
+								<tr id="prd-detail-size-notice-box">
 									<td class="prd-detail-size-notice" colspan="6"><span>본
 											실측표의 측정 치수는 GARMENTDYING에서 제공되며 절대적이지 않은 참고용 자료입니다.<br>측정자에
 											따라서 약간의 오차가 있을 수 있으며 같은 제품 내에서도 실제 기재된 수치와 차이가 있으니 참고용 자료로만
@@ -185,8 +172,10 @@
 							</tbody>
 						</table>
 					</div>
-					<h3>DESCIPTION</h3>
-					<h1><%=description%></h1>
+					<div id="description">
+						<h3>DESCIPTION</h3>
+						<h1><%=description%></h1>
+					</div>
 				</div>
 			</div>
 		</div>

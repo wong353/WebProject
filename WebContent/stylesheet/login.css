@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+#loginTable{
+	padding-top:100px;
+	width: 30%;
+	margin: auto;
+	padding-bottom:11%;
+}
+.joinbtn {
+    height: 57px;
+    padding: 0 10px;
+}
+
+.loginBtn{
+	background-color: black;
+    color: white;
+    vertical-align: middle;
+    border: 0;
+    margin-left: 6px;
+    height: 21px;
+}

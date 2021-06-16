@@ -65,9 +65,9 @@
 							<ul class="item">
 									<li>
 										<div class="thumb">
-											<a href="shop_details_top.jsp?p_id=<%=p_id%>"><img src="<%=thumb%>" class="prd-image"></a>
+											<a href="shop_details.jsp?p_id=<%=p_id%>"><img src="<%=thumb%>" class="prd-image"></a>
 										</div>
-									</li> <a href="shop_details_top.jsp"><li class="prd-desc"><span class=""></span></li>
+									</li> <a href="shop_details.jsp"><li class="prd-desc"><span class=""></span></li>
 										<li class="prd-name"><%=name%></li>
 										<li class="prd-price"><%=unitPriceComma%>원</li>
 										 </a>
