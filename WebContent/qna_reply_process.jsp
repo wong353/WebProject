@@ -34,7 +34,7 @@
 		int pg = Integer.parseInt(request.getParameter("pg"));
 		int num = Integer.parseInt(request.getParameter("num"));
 		String subject = multi.getParameter("subject");
-		String id = multi.getParameter("name");
+		String id = (String)session.getAttribute("id");
 		String name = multi.getParameter("name");
 		String content = multi.getParameter("content");
 		String dateNow = multi.getParameter("dateNow");

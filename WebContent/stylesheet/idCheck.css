@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+#sentence{
+	margin: 50px;
+	font-size: 10pt;
+    text-align: center;
+}
+
+font{
+	font-size: 11pt;
+	color:red ;
+	font-weight: bold;
+}
+
+#btn{
+	margin-left:165px;
+}

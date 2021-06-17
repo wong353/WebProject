@@ -3,6 +3,13 @@
 #join-caption{
 	text-align: center;
 }
+#joinTable {
+	margin: 100px 700px 0;
+	width: 50%;
+	padding-top: 0px;
+	padding-bottom: 15%;
+
+} 
 
 .button{
 	background-color: #000000de;

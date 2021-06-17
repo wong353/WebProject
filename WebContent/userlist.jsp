@@ -65,13 +65,29 @@
 		rs = pstmt.executeQuery();
 		
 		if(rs.next()){
-			total = rs.getInt(1);
+			total = rs.getInt(1)-1;
 		}
 		
 		int sort = 1;
 		
 		rs.close();
 		pstmt.close();
+		
+		// 정렬을 위한 쿼리
+		String sqlSort = "SELECT userno FROM member ORDER BY userno desc";
+		pstmt = conn.prepareStatement(sqlSort);
+		rs = pstmt.executeQuery();
+		 while(rs.next()){
+			int stepNum = rs.getInt(1);
+			sql = "UPDATE member SET ref = ? where userno = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sort);
+			pstmt.setInt(2, stepNum);
+			pstmt.executeUpdate();
+			sort++;
+		}
+		pstmt.close();
+		rs.close();
 		
 		// 끝페이지 설정
 	 	allPage = (int)Math.ceil(total/(double)ROWSIZE);
@@ -94,7 +110,7 @@
 									</td>
 								</tr>	
 								<tr>
-									<th>회원번호</th>
+									<th>NO.</th>
 									<th>이름</th>
 									<th>아이디</th>
 									<th>닉네임</th>
@@ -116,10 +132,11 @@
 	 	  						</tr>
 <%	} else {
 	
-		sql = "SELECT * FROM member WHERE userno >=? and userno <= ? ORDER by userno DESC";	
+		sql = "SELECT * FROM member WHERE ref >=? and ref <= ? and id != ? ORDER by ref";	
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, start);
 		pstmt.setInt(2, end);
+		pstmt.setString(3, "admin");
 		rs = pstmt.executeQuery();
 		while(rs.next()){
 			int ruserno = rs.getInt("userno");
@@ -133,9 +150,11 @@
 			String addr_detail = rs.getString("addr_detail");
 			String addr_ref = rs.getString("addr_ref");
 			String tel = rs.getString("tel");
+			int ref =rs.getInt("ref");
+			
 %>	
 								<tr>
-									<td class="usr_no"><%=ruserno%></td>
+									<td class="usr_no"><%=ref%></td>
 									<td class="usr_list"><%=name%></td>
 									<td class="usr_list"><%=rid%></td>
 									<td class="usr_list"><%=nickname%></td>
@@ -147,8 +166,8 @@
 									<td class="usr_list"><%=addr_ref%></td>	
 									<td class="usr_list"><%=tel%></td>	
 									<td>
-										<a href="mypage.jsp?userno=<%=ruserno%>&pg=<%=pg%>">수정</a> / 
-										<a href="deleteMember_process.jsp?userno=<%=ruserno%>&id=<%=id%>&pg=<%=pg%>">삭제</a>
+										<a href="userList_modify.jsp?userno=<%=ruserno%>&pg=<%=pg%>">수정</a> / 
+										<a href="deleteMember.jsp?userno=<%=ruserno%>&id=<%=rid%>&pg=<%=pg%>">삭제</a>
 									</td>
 								</tr>
 <%

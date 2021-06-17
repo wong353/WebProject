@@ -1,3 +1,4 @@
+<%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file = "reference/addressAPI.jsp" %>
@@ -9,70 +10,83 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/join.css">
+<script type="text/javascript" src="js/check.js"></script>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<script language="javascript" type="text/javascript" src="./js/check.js"></script>
-<script type="text/javascript">
+<% 
+	request.setCharacterEncoding("utf-8");
+		
+	//loginExist
+	String suserid = "";
 	
-function idcheck(id){
-	if(!member.id.value){
-		alert("아이디를 입력하세요!");
-		member.id.focus();
-		return false;
+	if (session.getAttribute("id") != null) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('이미 로그인 하셨습니다. 메인 페이지로 이동합니다.')");
+		script.println("location.href='main.jsp'");
+		script.println("</script>");
 	}
-	window.open('idCheck_process.jsp?id='+id, '_blank', 'width=400, height=300, top=300, left= 500');
-}
-
-function tel_auto(){
-	if(member.tel1.value.length==3){
-		member.tel2.focus();
-	}
-	if (member.tel2.value.length==4){
-		member.tel3.focus();
-	}
-}
+%>
+<script type="text/javascript">
 
 function cancel(){
 	if(confirm("메인 페이지로 돌아가시겠습니까?")){
 		location.href="main.jsp";
 	}
 }
-
 </script>
-
-
+<script type="text/javascript">
+		function idcheck(id){
+			if(!member.id.value){
+				alert("아이디를 입력하세요!");
+				member.id.focus();
+				return false;
+			}
+			var regType1 = /(?=.*\d{1,12})(?=.*[a-zA-Z]{1,12}).{4,12}$/;
+			if (!member.id.value.match(regType1)){
+				alert('아이디는 영문과 숫자를 조합한 4~12자 까지 사용 가능합니다!');
+				member.id.focus;
+				return false;
+			}
+			if(member.notThisId.value=="idCheck"){
+				alert("중복 체크를 진행하셨습니다!");
+				member.id.focus;
+				return false;
+			} else if(member.notThisId.value=="idUncheck"){
+				window.open('idCheck_process.jsp?id='+id, '_blank', 'width=400, height=300, top=300, left= 500, resizable = no, scrollbars = no' );
+			}
+		}
+</script>
+<script type="text/javascript">
+	function inputIdChk(){	// keydown 시 다시 중복체크하도록
+		document.member.idDuplication.value = "idUncheck";
+	}
+</script>
 </head>
-
-<style type="text/css">
-table {
-	width: 50%;
-	padding-top: 0px;
-	margin: 0 auto;
-} 
-
-</style>
-
 <body>
-	<%@include file = "./include/loginSessionExist.jsp" %>
-	
 	<%@include file="/include/dbconn.jsp"%>
 
 	<%@include file="/include/header.jsp"%>
-
+	
 			<div id="join-caption">
 				<h4>회원정보 입력</h4>
 			</div>
 			<form action="join_process.jsp" method="post" name="member">
 				<div id="join-wrapper">
 					<div id="join-table">
-						<table border="0">
+						<table id="joinTable">
 							<tr>
 								<td>*이름</td>
 								<td colspan="2"><input type="text" name="name" id="name"></td>
 							</tr>
-							<tr>
+							<tr>	
 								<td>*아이디</td>
-								<td colspan="2"><input type="text" name="id" id="id"> <input type="button" value="중복체크" onclick="idcheck(member.id.value)"></td>
+								<td colspan="2">
+									<input type="text" name="id" id="id" maxlength="50" onkeydown="inputIdChk()">
+									<input type="button" value="중복체크" onclick="idcheck(member.id.value)" class="button">
+									<input type="hidden" id="notThisId" name="idDuplication" value="idUncheck">
+								</td>
 							</tr>
 							<tr>
 								<td>*비밀번호</td>
@@ -240,7 +254,7 @@ table {
 							<tr>
 								<td>*우편번호</td>
 								<td colspan="2"><input type="text" id="sample6_postcode" placeholder="우편번호" name="zip">
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"></td>
+							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="button"></td>
 							</tr>
 							<tr>
 								<td>*집주소</td>
@@ -254,9 +268,9 @@ table {
 							</tr>
 							<tr>
 								<td>*휴대폰</td>
-								<td colspan="2"><input type="text" name=tel1 maxlength="3" size="3" onkeyup="tel_auto()">-
-								<input type="text" name=tel2 maxlength="4" size="4" onkeyup="tel_auto()">-
-								<input type="text" name=tel3 maxlength="4" size="4" onkeyup="tel_auto()"></td>
+								<td colspan="2"><input type="text" name=tel1 maxlength="3" size="3">-
+								<input type="text" name=tel2 maxlength="4" size="4" >-
+								<input type="text" name=tel3 maxlength="4" size="4"></td>
 							</tr>
 							<!-- <tr>
 								<td>SMS 인증번호</td>	
@@ -264,9 +278,9 @@ table {
 							</tr> -->
 							<tr> 	
 								<td colspan="2"><p>
-										<input type="button" onclick="check()" value="회원가입"> <input type="reset" value="초기화"></td>
+										<input type="button" onclick="check()" value="회원가입" class="button"> <input type="reset" value="초기화" class="button"></td>
 								<td><p>
-										<input type="button" value="취소" onclick="cancel()"></td>
+										<input type="button" value="취소" onclick="cancel()" class="button"></td>
 						</table>
 					</div>
 				</div> 

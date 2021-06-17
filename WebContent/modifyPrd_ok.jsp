@@ -1,7 +1,6 @@
-<%@page import="javafx.scene.control.Alert"%>
-<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.io.File"%>
 <%@page import="java.sql.*"%>
 <%@ page import="com.oreilly.servlet.*"%>
 <%@ page import="com.oreilly.servlet.multipart.*"%>
@@ -19,7 +18,7 @@
 	request.setCharacterEncoding("utf-8");
 	
 	String pg = request.getParameter("pg");
-	// String realFolder = "C:\\Project\\MyWeb\\WebContent\\image\\product"; //웹 어플리케이션상의 절대 경로
+	// String realFolder = "C:\\Project\\MyWeb\\WebContent\\image\\product"; //웹 어플리케이션상의 경로
 	String absolutePath = getServletContext().getRealPath("/"); //servlet상의 절대 경로
 	String encType = "utf-8"; //인코딩 타입
 	int maxSize = 10 * 1024 * 1024; //최대 업로드될 파일의 크기10Mb
@@ -53,11 +52,10 @@
 		stock = 0;
 	else
 		stock = Long.valueOf(unitsInStock);
-	
 
 	String params="";
 	
-	// 업로드된 파일명(다른 디테일 이미지는 안불러와짐)
+	// 업로드된 파일명
 	String thumbnail_Upload = multi.getFilesystemName("thumbnail2");	
 	
 	// 웹상에 보이는 이미지명

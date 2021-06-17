@@ -6,43 +6,50 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>아이디중복체크</title>
+<title>GarmentDying</title>
+<link rel="stylesheet" type="text/css" href="stylesheet/idCheck.css">
 <script type="text/javascript">
-	<%-- function useid(){
-		opener.member.id.value="<%=id%>";		
-	} --%>
+function setPartentText(){
+	opener.document.getElementById("notThisId").value = "idCheck";
+	window.close();
+}
 </script>
 </head>
 <body>
 	<%
-	request.setCharacterEncoding("utf-8");
-
-	String id = request.getParameter("id");
-
-
 	try {
+		request.setCharacterEncoding("utf-8");
 		
+		int idx = 1;
+		String id = request.getParameter("id");
 		String rid = "";
+		
 		String sql = "SELECT id FROM member WHERE id = ?";
-
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, id);
 		rs = pstmt.executeQuery();
 
 		if (rs.next())
 			rid = rs.getString("id");
-		if (id.equals(rid)) {
+
+			if (id.equals(rid)) {
 	%>
-	입력하신 아이디는 <font color="red"><%=rid%></font> 이며, 사용할 수 없습니다.
-	<br>
-	<input type="button" value="확인" onclick="window.close()">
+				<div id="sentence">
+					입력하신 아이디는 <font id="font"><%=id%></font> 이며, 사용하실 수 없습니다.
+				</div>
+				<br>
+				<input type="button" value="확인" onclick="window.close()" id="btn">
+				<input type="hidden" value=<%=id%> id="id">
 	<%
-		} else {
+			} else {
 	%>
-	입력하신 아이디는 <font color="red"><%=id%></font>이며, 사용할 수있는 아이디입니다.
-	<input type="button" value="사용" onclick="window.close()">
+				<div id="sentence">
+					입력하신 아이디는 <font id="font"><%=id%></font>이며, 사용하실 수 있는 아이디입니다.
+				</div>
+				<input type="button" value="사용" onclick="setPartentText()" id="btn">
+				<input type="hidden" value="<%=id%>" id="id">
 	<%
-		}
+			}
 	} catch (SQLException e) {
 	out.println("실패");
 	out.println("SQLException: " + e.getMessage());

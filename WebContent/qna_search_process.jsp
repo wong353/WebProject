@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <link rel="stylesheet" type="text/css" href="stylesheet/qna.css?ver=1.0">
 <link rel="stylesheet" type="text/css" href="stylesheet/header_cate.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header_cate2.css">
@@ -29,11 +30,10 @@
 </script>
 <body>
 <%@ include file="/include/dbconn.jsp"%>
-	
+<%@include file="/include/header.jsp" %>
 <%@include file="/include/loginSessionPass.jsp" %>
 
-<%@include file="/include/header.jsp" %>
-	
+
 <%
 	try{
 		request.setCharacterEncoding("utf-8");
@@ -180,13 +180,14 @@
 			String ip = rs.getString("ip");
 			int indent = rs.getInt("indent");
 			int parent = rs.getInt("parent");
+			int step2 = rs.getInt("step2");
 			
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			String nowDate = sf.format(date);
 %>
 					<tr>
-						<td><%=num%></td>
+						<td><%=step2%></td>
 						<td><%
 								for(int j=0; j<indent; j++){
 							%>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -207,6 +208,22 @@
 	}
 %>
 <tr>
+						<tr style="border: 0;">
+							<td colspan="3" align="left" id="labelTab">
+								<label>
+									<input type="radio" value="rname" name="radio" <%if(radio.equals("rname")){%> checked="checked"<%}%>>이름
+								</label>
+								<label>
+									<input type="radio" value="rsubject" name="radio"  <%if(radio.equals("rsubject")){%> checked="checked"<%}%> >제목
+								</label>
+								 <label>
+									<input type="radio" value="rcontent" name="radio"  <%if(radio.equals("rcontent")){%> checked="checked"<%}%>>내용
+								</label>
+								<span class="key-wrap"> <input type="text" name="search_text" id="search_text" value=""><input type="button" id="searchBtn" value="검색" onclick="checkSearch()">
+								</span>
+							</td>
+							<td colspan="2"><input type="button" value="글쓰기" id="writeBtn" onclick="window.location='qna_write.jsp?id=<%=id%>&pg=<%=pg%>'"></td>
+						</tr>
 						<td align="center" colspan="5"> 
 							<%
 								if(pg>BLOCK) {
@@ -240,22 +257,6 @@
 								}
 							%>
 						</td>
-					</tr>
-					<tr>
-						<td colspan="3" align="left">
-							<label>
-								<input type="radio" value="rname" name="radio" <%if(radio.equals("rname")){%> checked="checked"<%}%>>이름
-							</label>
-							<label>
-								<input type="radio" value="rsubject" name="radio"  <%if(radio.equals("rsubject")){%> checked="checked"<%}%> >제목
-							</label>
-							 <label>
-								<input type="radio" value="rcontent" name="radio"  <%if(radio.equals("rcontent")){%> checked="checked"<%}%>>내용
-							</label>
-							<span class="key-wrap"> <input type="text" name="search_text" id="search_text" value=""><input type="button" id="searchBtn" value="검색" onclick="checkSearch()">
-							</span>
-						</td>
-						<td colspan="2"><input type="button" value="글쓰기" id="writeBtn" onclick="window.location='qna_write.jsp?id=<%=id%>&pg=<%=pg%>'"></td>
 					</tr>
 				</table>
 			</div>

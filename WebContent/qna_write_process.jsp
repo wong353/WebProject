@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QnA</title>
 </head>
 <body>
 <%@ include file ="/include/dbconn.jsp" %>

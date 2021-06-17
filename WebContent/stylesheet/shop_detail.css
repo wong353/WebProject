@@ -11,9 +11,10 @@
 #top-left {
 	border-right: 1px solid gray;
 	float: left;
-	margin-left: 200px;
+	margin-left: 230px;
 	width: 709px;
 	padding-right: 20px;
+	margin-bottom: 150px;
 }
 
 #top-right {
@@ -37,13 +38,29 @@
 
 #detail-imageBox {
 	border-bottom: 1px solid gray;
-	padding-bottom: 50px;
+	padding-bottom: 200px;
+	margin-bottom: 30px;
 }
 
-#detail-img {
-	margin-top: 100px;
-	padding-bottom: 50px;
-}
+
 #description{
 	text-align:center;
+}
+
+#detail-imageBox{
+	margin-top: 100px;
+}
+
+#img-container{
+	margin-bottom: 50px;
+	padding:0;
+	text-align: center;
+	
+}
+#detail-img {
+	padding-bottom: 20px;
+}
+#detail-img1{
+	clear:both;
+	padding-bottom: 20px;
 }

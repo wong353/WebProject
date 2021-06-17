@@ -25,11 +25,30 @@
 		pstmt.executeUpdate();
 		pstmt.close();	// 다음 pstmt 사용할 시에 leak 방지
 		
-		String sql2 = "DELETE from member WHERE userno=?";
+		// foreign key를 참조하는 값이 있는 컬럼, 테이블 제거 시, 존재하지 않는 테이블을 참조하는 상황이 발생함에따라 foreign key check 비활성화.
+		sql = "SET foreign_key_checks = 0";
+		stmt = conn.createStatement();
+		stmt.executeUpdate(sql);
+		stmt.close();
+		
+		String sql2 = "DELETE from member WHERE userno = ? and id = ?";
 		pstmt = conn.prepareStatement(sql2);
 
 		pstmt.setString(1, userno);
+		pstmt.setString(2, id);
 		pstmt.executeUpdate();
+		pstmt.close();
+		
+		sql2 = "DELETE from cart WHERE user_id = ?";
+		pstmt = conn.prepareStatement(sql2);
+
+		pstmt.setString(1, id);
+		pstmt.executeUpdate();
+		
+		// 다시 활성화
+		sql = "SET foreign_key_checks = 1";
+		stmt = conn.createStatement();
+		stmt.executeUpdate(sql);
 		
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -45,6 +64,7 @@
 		out.println(e.getMessage());
 	} finally {
 		if(pstmt != null) pstmt.close();
+		if(stmt != null) stmt.close();
 		if(conn != null) conn.close();
 	}
 	%>

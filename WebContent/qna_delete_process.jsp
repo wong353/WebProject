@@ -6,13 +6,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QnA</title>
 </head>
 <body>
 	<%@ include file="/include/dbconn.jsp"%>
 
 	<%
 	request.setCharacterEncoding("utf-8");
+	
+	String absolutePath = getServletContext().getRealPath("/");
 
 	int pnum = Integer.parseInt(request.getParameter("num"));
 	String thumbnail = request.getParameter("thumbnail");
@@ -22,7 +24,29 @@
 	int ref = 0;
 
 	try {
-		
+		if(thumbnail!=""){
+			// 물리적 파일삭제
+			File FileList = new File(absolutePath);
+			
+			// 해당 폴더의 전체 파일 배열화
+			String fileList[] = FileList.list();
+			
+			// 전체 파일
+			for(int i = 0; i < fileList.length; i++){
+				// 파일명 조회
+				String delFileName = fileList[i];
+				
+				// 바꾸기 전 이미지명과 일치한 이미지를 찾아 삭제
+				if(delFileName.equals(thumbnail)){
+					File deleteFile = new File(absolutePath + "\\" + delFileName);
+					String s = deleteFile.getName();
+					
+					Thread.sleep(50); // 파일을 삭제하려고 하니 파일은 존재하는데 파일 디스크립터를 이미 사용 중이여서 삭제 불가능으로 추정.. 해서 스레드 일시중단 시키고 삭제 진행
+					deleteFile.delete();
+					break;
+				}
+			}
+		}
 		// 해당 글에 답글이 있을 경우, 삭제된 글로 게시판에 보여지도록 수정하는 Query
 		String parentPost = "SELECT ref,parent FROM board WHERE num = ?";
 		pstmt = conn.prepareStatement(parentPost);
@@ -75,7 +99,6 @@
 					rs = pstmt.executeQuery();
 					if(rs.next()){
 						int arr = rs.getInt(1);
-						out.println(arr);
 						if(arr==0){	// parent 가 0 또는 1인 ref가 하나라도 없으면 전부 삭제
 							finalArrange = "DELETE FROM board where ref =?";
 							pstmt = conn.prepareStatement(finalArrange);
@@ -102,16 +125,14 @@
 			rs = stmt.executeQuery(sqlList);
 				while (rs.next()) {
 					int num = rs.getInt(1);
-					out.println(num);
 					int ref2 = rs.getInt(2);
-					out.println(ref2);
 					sqlList = "UPDATE board SET ref='"+num+"'where ref2='"+ref2+"'"; // 가족필드(ref2) 기준으로 조건을 주어 ref를 num으로 변경 
 					stmt = conn.createStatement();
 					stmt.executeUpdate(sqlList);
 				}
 				
 			// 이미지 삭제
-			String realFolder = "C:\\Project\\MyWeb\\WebContent\\image\\qna";
+			String realFolder = getServletContext().getRealPath("/");
 			File FileList = new File(realFolder);
 			
 			//해당 폴더의 전체 파일리스트 조회
@@ -122,12 +143,6 @@
 				if(str.equals(imgName)){
 				File deleteFile = new File(realFolder + "\\" + imgName);
 				String s = deleteFile.getName();
-				%>
-					<script type="text/javascript">
-					console.log("str: "+'<%=str%>');
-					console.log("deleteFile: "+'<%=s%>');
-					</script>
-				<%
 		            /* Thread.sleep(1000); */	// 파일을 삭제하려고 하니 파일은 존재하는데 파일 디스크립터를 이미 사용 중이여서 삭제 불가능으로 추정.. 해서 스레드 일시중단 시키고 삭제 진행
 					deleteFile.delete();
 					break;
@@ -135,11 +150,10 @@
 			}
 		}
 		
-		
 	%>
 		<script>
 				alert("삭제에 성공했습니다.");
-				document.location.href = "qna.jsp?pg=<%=pg%>";
+				document.location.href = "qna.jsp?pg="+<%=pg%>;
 		</script>
 	<%
 	} catch (Exception e) {

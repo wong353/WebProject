@@ -12,7 +12,7 @@
 
 	<!-- 프로젝트에 사용되는 파라미터 -->
 	<!-- application 내장 객체가 읽어들인다. -->
-	<!--<context-param>
+	<context-param>
 		<param-name>pageSize</param-name>
 		<param-value>10</param-value>
 	</context-param>
@@ -31,7 +31,7 @@
 	<servlet-mapping>
 		<servlet-name>MyWebServlet</servlet-name>
 		<url-pattern>*.MyWeb</url-pattern>
-	</servlet-mapping> 에러 페이지 처리
+	</servlet-mapping>
 	<error-page>
 		<error-code>404</error-code>
 		<location>/errorPage.jsp</location>
@@ -39,5 +39,5 @@
 	<error-page>
 		<error-code>500</error-code>
 		<location>/errorPage.jsp</location>
-	</error-page>-->
+	</error-page>
 </web-app>

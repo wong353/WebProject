@@ -10,19 +10,20 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css?ver=1.1">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
+<script type="text/javascript" src="./include/jquery-1.9.0.js"></script>
 <meta charset="UTF-8">
 <title>QnA</title>
 </head>
-
 <script type="text/javascript">
-	function checkSearch(){
-		let txtVal = document.myform.search_text;
-		if(txtVal.value.equals("") || !txtVal.value || txtVal.value == ""){
+	function checkSearch() {
+		let txtVal = $('#search_text').val();
+		txtVal = txtVal.trim();    // 문자열 중간 제외 앞뒤 공백을 제거
+		if (!txtVal || txtVal == "") {
 			alert('단어를 입력해주세요!');
-			myfrm.search_text.focus();
+			myform.search_text.focus();
 			return false;
-		}else{
-			myfrm.submit();
+		} else {
+			myform.submit();
 		}
 	}
 </script>
@@ -149,13 +150,14 @@
 			String ip = rs.getString("ip");
 			int indent = rs.getInt("indent");
 			int parent = rs.getInt("parent");
+			int step2 = rs.getInt("step2");
 			
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 			String nowDate = sf.format(date);
 %>	
 							<tr>
-								<td><%=num%></td>
+								<td><%=step2%></td>
 								<td><%for(int j=0; j<indent; j++){ // 답글의 들여쓰기 정도%>	
 										&nbsp;&nbsp;&nbsp;&nbsp;
 									<%}%>
@@ -187,7 +189,7 @@
 										<input type="radio" value="rcontent" name="radio">내용
 									</label>
 									<span class="key-wrap">
-										<input type="text" name="search_text" id="search_text" value="" class="MS_input_txt"><input type="submit" id="searchBtn" value="검색" onclick="checkSearch()">
+										<input type="text" name="search_text" id="search_text" value="" class="MS_input_txt"><input type="button" id="searchBtn" value="검색" onclick="checkSearch()">
 									</span>
 								</td>
 								<td colspan="2"><input type="button" id="writeBtn" value="글쓰기" onclick="window.location='qna_write.jsp?id=<%=id%>&pg=<%=pg%>'"></td>

@@ -43,9 +43,7 @@ function checkForm(){
 		<div class="scede-frm">
 			<hr>
 			<form action="delete_process.jsp" method="post">
-			<%-- <input type="hidden" name="userno" value="<%=userno%>">
-			<input type="hidden" name="id" value="<%=id%>"> --%>
-				<fieldset border="0">
+-				<fieldset border="0">
 					<div class="table-d2-view">
 						<table summary="사유" border="0">
 							<caption></caption>

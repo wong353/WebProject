@@ -1,6 +1,4 @@
 function check(){	
-
- 	
 	// 이름 검증
 	if (!member.name.value){
 		alert("이름을 입력하세요!");
@@ -10,10 +8,30 @@ function check(){
 	
 	// 아이디 검증
 	if(!member.id.value){
-		alert("아이디를 입력하세요");
+		alert("아이디를 입력하세요!");
 		member.id.focus();
 		return false;
 	}
+	
+	/* var regType1 = /^[A-Za-z0-9+]{4,12}$/; */
+	var regType1 = /(?=.*\d{1,12})(?=.*[a-zA-Z]{1,12}).{4,12}$/;
+	if (!member.id.value.match(regType1)){
+		alert('아이디는 영문과 숫자를 조합한 4~12자 까지 사용 가능합니다!');
+		member.id.focus;
+		return false;
+	}
+	
+	if(member.notThisId.value == "idUncheck"){
+		alert("아이디 중복 체크를 해주세요!");
+		member.id.focus();
+		return false;
+	}
+	 
+	/* if(member.id.value == member.notThisId.value){
+		alert("중복된 아이디 입니다!");
+		member.id.focus();
+		return false;
+	}  */
 	
 	// 비밀번호 검증
 	if (!member.pwd1.value){
@@ -60,16 +78,6 @@ function check(){
 		member.email.focus();
 		return false;
 	}
-	
-	// 이메일
-	/*var remail = member.email.value;
-	var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-	if (!remail.match(regExpEmail)){
-		alert("이메일 형식에 맞춰 작성해주세요! ex) 000@naver.com");
-		member.email.focus();
-		return false;
-	}	*/
 	
 	// 생일
 	if (!member.birthyear.value){
@@ -122,29 +130,4 @@ function check(){
 		return false;
 	}	
 	member.submit();
-	
-	/*// 아이디 중복 체크
-	function checkid() {
-
-	if(member.id.value == "") {
-		alert("id를 입력하시오.");
-		member.id.focus();
-	} else {
-		url = "check_id.jsp?id=" + member.id.value;
-		// 두 번째 파라미터는 메소드 전송방식이 아니고 타이틀
-		window.open(
-				url, 
-				"id check", "toolbar=no, width=350, height=150, top=150, left=150");
-	}
-
-	}*/
-	member.submit();
-}
-
-function cancel(){
-	if(confrim("입력하신 내용은 저장되지 않습니다. 메인 페이지로 돌아가시겠습니까?")){
-		location.href="main.jsp";
-	}else{
-		alert('아니오를 누르셨습니다');
-	}	 
 }

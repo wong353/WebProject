@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/header_cate2.css?ver1">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
-<link rel="stylesheet" type="text/css" href="stylesheet/qna_read.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/qna_write.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/fileButton.css">
 <style type="text/css">
 </style>
@@ -75,10 +75,10 @@ $(document).ready(
 <form name="replyForm" method="post" enctype="multipart/form-data" action="qna_reply_process.jsp?num=<%=num%>&pg=<%=pg%>">
 	<input type="hidden" value="<%=nowDate%>" name="dateNow"> 
 	<div id="title">REPLY</div>
-	<table border="1">
+	<table>
 		<tr>
 			<td>
-				<label>SUBJECT:</label>
+				<label class="write-title">SUBJECT:</label>
 			</td>
 			<td>
 				<input type="text" name="subject" value="<%=subject%>" class="text-area" readonly="readonly">
@@ -86,7 +86,7 @@ $(document).ready(
 		</tr>
 		<tr>
 			<td>
-				<label>NAME:</label>
+				<label class="write-title">NAME:</label>
 			</td>
 			<td>
 				<input type="text" name="name" value="<%=loginName%>" class="text-area" readonly="readonly">
@@ -94,7 +94,7 @@ $(document).ready(
 		</tr>
 		<tr>
 			<td>
-				<label>CONTENT:</label>
+				<label class="write-title">CONTENT:</label>
 			</td>
 			<td>	
 				<textarea rows="10" cols="30" name="content" id="content"></textarea> 

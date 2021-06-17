@@ -1,3 +1,4 @@
+<%@ include file="/include/QnA_IdCheck.jsp"%>
 <%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.*"%>
@@ -17,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/qna_modify.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/qna_write.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/fileButton.css">
 <style type="text/css">
 </style>
@@ -72,7 +74,7 @@
 	request.setCharacterEncoding("utf-8");
 
 	int pg = Integer.parseInt(request.getParameter("pg"));
-
+	
 	Date nowTime = new Date();
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -103,10 +105,10 @@
 	<input type="hidden" value="<%=sf.format(nowTime)%>" name="dateNow"> 
 	<input type="hidden" value=<%=thumbnail%> name="imgOrigin"> 
 	<input type="hidden" value=<%=thumb_sub1%> name="imgOriginSub"> 
-	<table border="1">
+	<table>
 		<tr>
 			<td>
-				<label>SUBJECT:</label>
+				<label class="write-title">SUBJECT:</label>
 			</td>
 			<td>
 				<input type="text" name="subject" value="<%=subject%>" class="text-area">
@@ -114,7 +116,7 @@
 		</tr>
 		<tr>
 			<td>
-				<label>NAME:</label>
+				<label class="write-title">NAME:</label>
 			</td>
 			<td>
 				<input type="text" name="name" value="<%=name%>" class="text-area" readonly="readonly">
@@ -122,7 +124,7 @@
 		</tr>
 		<tr>
 			<td>
-				<label>CONTENT:</label>
+				<label class="write-title">CONTENT:</label>
 			</td>
 			<td>
 				<%if(thumbnail!=null){%>
@@ -140,8 +142,10 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-			<input type="button" value="수정" class="button" onclick="modifyCheck();">
-			<input type="button" value="취소" class="button" onclick="history.back(-1);">
+			<div id="bot-btn-wrapper">
+				<input type="button" value="수정" class="button" onclick="modifyCheck();">
+				<input type="button" value="취소" class="button" onclick="history.back(-1);">
+			</div>
 			</td>
 		</tr>
 	</table>

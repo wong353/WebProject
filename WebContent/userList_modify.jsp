@@ -20,6 +20,7 @@
 <meta charset="UTF-8">
 <title>GARMENTDYING OFFICIAL SITE</title>
 <script lang="javascript" type="text/javascript" src="./js/check_mypage.js"></script>
+
 </head>
 
 <style type="text/css">
@@ -198,10 +199,9 @@ table {
 								<td><input type="button" onclick="" value="확인"></td>	
 							</tr> -->
 							<tr> 	
-								<td colspan="2"><p>
-										<input type="button" onclick="check_mypage()" value="확인" class="button"><input type="button" value="취소" onclick="cancel()" class="button"> </td>
-								<td><p>
-										<input type="button" value="회원탈퇴" onclick="location.href='delete.jsp'" class="button"></td>
+								<td colspan="2">
+									<p><input type="button" onclick="check_mypage()" value="확인" class="button"><input type="button" value="취소" onclick="cancel()" class="button"></p>
+							    </td>
 						</table>
 					</div>
 				</div> 

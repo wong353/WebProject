@@ -9,7 +9,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	
-	// String realFolder = "C:\\Project\\1024\\WebContent\\image"; //로컬 경로
+	// String realFolder = "C:\\Project\\1024\\WebContent\\image\\product"; //로컬 경로
 	String absolutePath = getServletContext().getRealPath("/"); //servlet상의 절대 경로
 	String encType = "utf-8"; //인코딩 타입
 	int maxSize = 10 * 1024 * 1024; //최대 업로드될 파일의 크기10Mb
@@ -63,9 +63,11 @@
 	
 	String file1 = (String)files.nextElement();
 	String thumbnail = multi.getFilesystemName(file1);
+	
 	System.out.println(file1);
 	System.out.println(thumbnail);
-	String sql = "insert into product values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	String sql = "INSERT INTO product(p_id, p_name, p_unitPrice, p_size, p_color, p_description, p_category, p_unitsInStock, p_condition, p_thumbnail, p_fileName_detail1, p_fileName_detail2, p_fileName_detail3, p_fileName_detail4)"+
+	"values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	pstmt = conn.prepareStatement(sql);
 	pstmt.setString(1, productId);
@@ -78,11 +80,10 @@
 	pstmt.setLong(8, stock);
 	pstmt.setString(9, condition);
 	pstmt.setString(10, thumbnail);
-	System.out.println(absolutePath);
-	pstmt.setString(11, image4);
+	pstmt.setString(11, image1);
 	pstmt.setString(12, image3);
 	pstmt.setString(13, image2);
-	pstmt.setString(14, image1);
+	pstmt.setString(14, image4);
 	pstmt.executeUpdate();
 	
 	%>

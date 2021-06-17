@@ -20,16 +20,14 @@
 </head>
 <body>
 <%@ include file="/include/dbconn.jsp"%>
-
+<%@include file="/include/header.jsp"%>
 <%@include file="/include/loginSessionPass.jsp" %>
 
-<%@include file="/include/header.jsp"%>
-
-<%@include file="/include/QnA_IdCheck.jsp"%>
 
 <%
 	request.setCharacterEncoding("utf-8");
-	
+
+	/* String realFolder = request.getServletContext().getRealPath("/"); */
 	int num = Integer.parseInt(request.getParameter("num"));
 	int pg = Integer.parseInt(request.getParameter("pg"));
 	
@@ -38,7 +36,8 @@
 	
 	try{
 		// 삭제글에는 admin 제외 접근할 수 없도록
-		if(session.getAttribute("id")=="admin"){
+		if(session.getAttribute("id").equals("admin")){
+			System.out.println(session.getAttribute("id"));
 			String accessDeny = "SELECT parent FROM board WHERE num = ?";
 			pstmt = conn.prepareStatement(accessDeny);
 			pstmt.setInt(1, num);
@@ -141,20 +140,18 @@
 			<tr>
 			<td colspan="2" id="view-menu">
 				<div class="view-link">
-					<a href="qna_modify.jsp?num=<%=num%>&id=<%=id%>&pg=<%=pg%>" class="view-link2">글수정</a>
+					<a href="qna_modify.jsp?num=<%=num%>&id=<%=rid%>&pg=<%=pg%>" class="view-link2">글수정</a>
 				</div>
 				<div class="view-link">
-					<a href="qna_delete.jsp?num=<%=num%>&pg=<%=pg%>&thumbnail=<%=thumbnail%>" class="view-link2">글삭제</a>
+					<a href="qna_delete.jsp?num=<%=num%>&id=<%=rid%>&pg=<%=pg%>&thumbnail=<%=thumbnail%>" class="view-link2">글삭제</a>
 				</div>
 				<div class="view-link">
 					<a href="qna_write.jsp?pg=<%=pg%>" class="view-link2">글쓰기</a>
 				</div>
-				<% if(session.getAttribute("id").equals("admin")){ // 관리자만 답글을 이용할 수 있도록 조건문으로 막기%>
 				<div class="view-link">
 					<a href="qna_reply.jsp?num=<%=num%>&pg=<%=pg%>" class="view-link2">답글</a>
 					<%-- <input type=button value="답글" OnClick="window.location='qna_reply.jsp?num=<%=num%>'"> 이렇게도 사용 가능 --%>
 				</div>	
-				<%} %>
 				<div class="view-link">
 					<a href="qna.jsp?pg=<%=pg%>" class="view-link2">목록</a>
 				</div>				

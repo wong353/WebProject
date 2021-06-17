@@ -14,6 +14,7 @@
 	request.setCharacterEncoding("utf-8");
 	
 	String preUrl = request.getParameter("preUrl");
+	System.out.println(preUrl);
 	String id = request.getParameter("id");
 	String pwd = request.getParameter("pwd");
 
@@ -52,16 +53,20 @@
 			    Cookie eatCookie = new Cookie("saveUrlCk", null);
 			    eatCookie.setMaxAge(0);
 			    response.addCookie(eatCookie);
-			    
-				if(!preUrl.contains("mypage") && preUrl != null){
+			    if(session.getAttribute("id").equals("admin") && preUrl.contains("mypage")){
+			    	response.sendRedirect("userList.jsp");
+			    }
+				if(!preUrl.contains("mypage") && !preUrl.contains("join") && preUrl != null){
 					response.sendRedirect(preUrl);
 				}
 				else if(preUrl.contains("mypage")){
 					preUrl = preUrl + "?userno=" + userno;
 					response.sendRedirect(preUrl);
+				} else if(preUrl.contains("join.jsp") || preUrl.contains("join_process")){
+					response.sendRedirect("main.jsp");
 				} else if(preUrl.equals("") || preUrl.equals(null)){
 					response.sendRedirect("main.jsp");
-				}
+				} 
 			}
 		} else{	// rs.next() 가 없으면 
 			script.println("<script>");

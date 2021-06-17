@@ -22,9 +22,9 @@
 	String addr_detail = request.getParameter("addr_detail");
 	String addr_ref = request.getParameter("addr_ref");	
 	String tel = request.getParameter("tel1") + request.getParameter("tel2") + request.getParameter("tel3");
-	
 
 	try {
+		
 		String sql = "INSERT INTO member(name, id, password, nickname, email, birthday, zip, addr, addr_detail, addr_ref, tel) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		pstmt = conn.prepareStatement(sql);
@@ -42,14 +42,15 @@
 		pstmt.setString(11, tel);
 
 		pstmt.executeUpdate();
-		out.println("입력 성공");
-		response.sendRedirect("login.jsp");
+		out.println("<script>");
+		out.println("alert('회원가입에 성공하셨습니다!')");
+		out.println("location.href='login.jsp'");
+		out.println("</script>");
 
 	} catch (Exception e) {
 		e.printStackTrace();
 		out.println("실패");
 		out.println("SQLException: " + e.getMessage());
-		response.sendRedirect("register.jsp");
 	} finally {
 		if (pstmt != null)
 			pstmt.close();

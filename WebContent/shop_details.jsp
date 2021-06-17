@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/shop_detail.css">
-<title>입력</title>
+<title>GARMENTDYING OFFICIAL SITE</title>
 </head>
 <body>
 	<%@ include file="/include/dbconn.jsp" %>
@@ -32,7 +32,10 @@
 			String thumbnail = rs.getString("p_thumbnail");
 			String name = rs.getString("p_name");
 			String unitPrice = rs.getString("p_unitPrice");
-			String fileName_detail1 = rs.getString("p_fileName_detail1");
+			String detail1 = rs.getString("p_fileName_detail1");
+			String detail2 = rs.getString("p_fileName_detail2");
+			String detail3 = rs.getString("p_fileName_detail3");
+			String detail4 = rs.getString("p_fileName_detail4");
 			String description = rs.getString("p_description");
 			String p_size = rs.getString("p_size");
 	%>
@@ -60,7 +63,7 @@
 					<div id="top">
 						<div id="top-left">
 							<div id="left-main">
-								<a href=""><img alt="main" src="<%=thumbnail%>"></a>
+								<img alt="main" src="<%=thumbnail%>">
 							</div>
 						</div>	
 						<div id="top-right">
@@ -114,16 +117,60 @@
 							</div>
 						</div>
 					</div>
-					<div id="detail-imageBox" style="">
+					<div id="space"></div>
+					<div id="detail-imageBox">
+						<div id="img-container">
+							<%if(detail1 != null && !detail1.equals("")){%>
+									<div id="detail-img1">
+										<img alt="Image" id="" src="<%=detail1%>">
+									</div>
+							<%}%>						
+							<%if(detail2 != null && !detail2.equals("")){%>
+									<div id="detail-img">
+										<img alt="Image" id="" src="<%=detail2%>">
+									</div>
+							<%}%>						
+							<%if(detail3 != null && !detail3.equals("")){%>
+									<div id="detail-img">
+										<img alt="Image" id="" src="<%=detail3%>">
+									</div>
+							<%}%>						
+							<%if(detail4 != null && !detail4.equals("")){%>
+									<div id="detail-img">
+										<img alt="Image" id="" src="<%=detail4%>">
+									</div>
+							<%}%>	
+						</div>					
 						<table style="" id="detailTable">
 							<tbody>
+								<%-- <%if(detail2 != null && !detail2.equals("")){%>
 								<tr>
 									<td colspan="5">
 										<div id="detail-img">
-											<img alt="Image" id="" src="<%=fileName_detail1%>">
+											<img alt="Image" id="" src="<%=detail2%>">
 										</div>
 									</td>
 								</tr>
+								<%}%>
+								<%if(detail3 != null && !detail3.equals("")){%>
+								<tr>
+									<td colspan="5">
+										<div id="detail-img">
+											<img alt="Image" id="" src="<%=detail3%>>">
+										</div>
+									</td>
+								</tr>
+								<%}%>
+								<%if(detail4 != null && !detail4.equals("")){%>
+								<tr>
+									<td colspan="5">
+										<div id="detail-img">
+											<img alt="Image" id="" src="<%=detail4%>">
+										</div>
+									</td>
+								</tr>
+								<%}%>
+								 --%>
 								<tr>
 									<td class="prd-detail-size-notice" colspan="6">MODEL :	000CM 00KG / SIZE : LARGE</td>
 								</tr>
@@ -172,10 +219,10 @@
 							</tbody>
 						</table>
 					</div>
-					<div id="description">
+					<%-- <div id="description">
 						<h3>DESCIPTION</h3>
 						<h1><%=description%></h1>
-					</div>
+					</div> --%>
 				</div>
 			</div>
 		</div>

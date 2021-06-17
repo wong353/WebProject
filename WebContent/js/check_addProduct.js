@@ -7,7 +7,6 @@ function checkAddProduct() {
 	var size = document.getElementsByName("size"); 
 	var color = document.getElementById("color"); 
 	var description = document.getElementById("description"); 
-	var category2 = document.getElementById("category2");  
 	var unitsInStock = document.getElementById("unitsInStock");
 	var condition = document.getElementsByName("condition");
 	
@@ -72,11 +71,14 @@ function checkAddProduct() {
 	}	
 	
 	// 상품 분류 체크
-	if(!category2 || category2=="선택"){
+	if(!newProduct.category.value){
 		alert("[분류]\n분류를 체크하세요");
 		return false;
 	}
-				
+	if(newProduct.category2.value === "") {
+		alert("[분류]\n분류를 체크하세요");
+		return false;
+	}	
 	
 	// 재고 수 체크
 	if(unitsInStock.value==""){

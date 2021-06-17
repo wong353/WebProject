@@ -9,25 +9,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>GARMENTDYING OFFICIAL SITE</title>
 </head>
 <body>
 <%
 	request.setCharacterEncoding("utf-8");
 	
-	String userno = request.getParameter("userno");
+	String userNum = request.getParameter("userNum");
+	String userId = request.getParameter("userId");
 	String pg = request.getParameter("pg");
 	
 	try{
-		String sql = "DELETE FROM member WHERE userno = ?";
-		pstmt = conn.prepareStatement(sql);
+		// foreign key를 참조하는 값이 있는 컬럼, 테이블 제거 시, 존재하지 않는 테이블을 참조하는 상황이 발생함에따라 foreign key check 비활성화.
+		String sql = "SET foreign_key_checks = 0";
+		stmt = conn.createStatement();
+		stmt.executeUpdate(sql);
+		stmt.close();
 		
-		pstmt.setString(1, userno);
+		sql = "DELETE FROM member WHERE userno = ? && id = ?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, userNum);
+		pstmt.setString(2, userId);
 		pstmt.executeUpdate();
+		pstmt.close();
+		
+		sql = "DELETE from cart WHERE user_id = ?";
+		pstmt = conn.prepareStatement(sql);
+
+		pstmt.setString(1, userId);
+		pstmt.executeUpdate();
+		
+		// 다시 활성화
+		sql = "SET foreign_key_checks = 1";
+		stmt = conn.createStatement();
+		stmt.executeUpdate(sql);
 %>	
 		<script type="text/javascript">
 			alert('삭제 성공했습니다.');
-			location.href= "userList.jsp?pg='<%=pg%>'";
+			location.href= "userList.jsp?pg="+<%=pg%>;
 		</script>
 <%		
 	}catch (Exception e){

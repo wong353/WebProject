@@ -11,20 +11,8 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/productlist.css?ver=1.1">
 <meta charset="UTF-8">
-<title>PRODUCT</title>
+<title>GARMENTDYING OFFICIAL SITE</title>
 </head>
-
-<script type="text/javascript">
-/* function frm_action() {
-	return true;
-}
-
-function frm_action2(frm) {
-	frm.action='qna_search_process.jsp';
-	frm.submit();
-	return true;
-}  submit 2번 쓰는 Javascript*/
-</script>
 <body>
 <%@ include file = "/include/dbconn.jsp" %>
 <%@ include file="/include/admin.jsp"%>
@@ -35,7 +23,7 @@ function frm_action2(frm) {
 
 
 	try{
-	final int ROWSIZE = 6; // 한페이지에 보일 게시물 수
+	final int ROWSIZE = 5; // 한페이지에 보일 게시물 수
 	final int BLOCK = 5; // 아래에 보일 페이지 최대개수 1~5 / 6~10 / 11~15 식으로 5개로 고정
 	
 	int pg = 1; //기본 페이지값
@@ -70,6 +58,20 @@ function frm_action2(frm) {
 		rs.close();
 		pstmt.close();
 		
+		// 정렬을 위한 쿼리
+		String sqlSort = "SELECT p_id FROM product ORDER BY p_id desc";
+		pstmt = conn.prepareStatement(sqlSort);
+		rs = pstmt.executeQuery();
+		 while(rs.next()){
+			String stepNum = rs.getString(1);
+			sql = "UPDATE product SET ref = ? where p_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sort);
+			pstmt.setString(2, stepNum);
+			pstmt.executeUpdate();
+			sort++;
+		}
+		
 		// 끝페이지 설정
 	 	allPage = (int)Math.ceil(total/(double)ROWSIZE);
 		
@@ -93,6 +95,7 @@ function frm_action2(frm) {
 									</td>
 								</tr>	
 								<tr>
+									<th>No.</th>
 									<th>상품아이디</th>
 									<th>상품명</th>
 									<th>가격</th>
@@ -124,12 +127,13 @@ function frm_action2(frm) {
 			int idx = Integer.parseInt((rs.getString("p_id").substring(1)));
 			System.out.println(idx);
 		} */
-		sql = "select * from product where substring(p_id,2) >= ? and substring(p_id,2)<= ?"; // p_id 의 P를 substring 후 비교	
+		sql = "select * from product where ref >= ? and ref <= ? ORDER BY ref"; // p_id 의 P를 substring 후 비교	
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, start);
 		pstmt.setInt(2, end);
 		rs = pstmt.executeQuery();
 		while(rs.next()){
+			int ref = rs.getInt("ref");
 			String p_id = rs.getString("p_id");
 			String p_name = rs.getString("p_name");
 			String p_unitPrice = rs.getString("p_unitPrice");
@@ -140,13 +144,14 @@ function frm_action2(frm) {
 			String p_unitsInStock = rs.getString("p_unitsInStock");
 			String p_condition = rs.getString("p_condition");
 			String p_thumbnail = rs.getString("p_thumbnail");
-			/* if(p_thumbnail != null) p_thumbnail = absolutePath + p_thumbnail;  */ 
+			/* if(p_thumbnail != null) p_thumbnail = realPath + p_thumbnail;  */ 
 			String p_fileName1 = rs.getString("p_fileName_detail1");
 			String p_fileName2 = rs.getString("p_fileName_detail2");
 			String p_fileName3 = rs.getString("p_fileName_detail3");
 			String p_fileName4 = rs.getString("p_fileName_detail4");
 %>	
 								<tr>
+									<td class="prd_list"><%=ref%></td>
 									<td class="prd_list"><%=p_id%></td>
 									<td class="prd_list"><%=p_name%></td>
 									<td class="prd_list"><%=p_unitPrice%></td>

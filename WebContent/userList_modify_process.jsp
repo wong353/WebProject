@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>QnA</title>
 </head>
 <body>
 	<%
@@ -24,8 +24,8 @@
 	String addr = request.getParameter("addr");
 	String addr_detail = request.getParameter("addr_detail");
 	String addr_ref = request.getParameter("addr_ref");
-	String tel = request.getParameter("tel1")+request.getParameter("tel2")+request.getParameter("tel3");
-	System.out.println(tel);
+	String tel = request.getParameter("tel1")+request.getParameter("tel2")+request.getParameter("tel2");
+	
 
 	try {
 		String sql = "update member set password=?, nickname=?, email=?, birthday=?, zip=?, addr=?, addr_detail=?, addr_ref=?, tel=? where userno=?";
@@ -43,12 +43,16 @@
 		pstmt.setString(10, userno);		
 		pstmt.executeUpdate();
 		
-%>
-	<script type="text/javascript">
-		alert("수정 완료했습니다. 메인페이지로 돌아갑니다.");
-		location.href = "main.jsp";
-	</script>
-<%
+		
+		String pg = request.getParameter("pg");
+		if(pg==null) pg = "1";
+	%>	
+		<script type="text/javascript">
+			alert('삭제 성공했습니다.');
+			location.href= "userList.jsp?pg="+<%=pg%>;
+		</script>
+<%		
+				
 	} catch (Exception e) {
 		out.println("입력 실패");
 		out.println(e.getMessage());

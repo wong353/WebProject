@@ -15,8 +15,7 @@
 <meta charset="UTF-8">
 <title>QnA</title>
 <link rel="stylesheet" type="text/css" href="stylesheet/header_cate.css">
-<link rel="stylesheet" type="text/css"
-	href="stylesheet/header_cate2.css">
+<link rel="stylesheet" type="text/css" href="stylesheet/header_cate2.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/all.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">

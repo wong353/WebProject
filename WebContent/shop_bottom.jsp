@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/shop.css?after">
 <meta charset="UTF-8">
-<title>Garment Dying</title>
+<title>GARMENTDYING OFFICIAL SITE</title>
 </head>
 
 <body>

@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="stylesheet/header.css">
 <link rel="stylesheet" type="text/css" href="stylesheet/footer.css">
 <meta charset="UTF-8">
-<title>Garment Dying</title>
+<title>GARMENTDYING OFFICIAL SITE</title>
 </head>
 
 <style type="text/css">

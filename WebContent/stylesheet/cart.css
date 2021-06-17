@@ -60,25 +60,23 @@ button {
     justify-content: space-between;
     align-items: center;
     margin-left: 3rem;
+    
 }
 
-.cart-info-box .item-info .info-name {
-    font-size: 2.1rem;
-}
 
 .cart-info-box .item-info .info-name {
-    font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 0.8rem;
+
 }
 
 .cart-info-box .item-info .info-price {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
     margin-left:0;
+    margin-bottom: 0.5rem;
 }
 
 .cart-info-box .item-info .item-remove{
+
 	border: 0;
 	outline: 0;
 	background-color: rgba( 255, 255, 255, 0.5 );

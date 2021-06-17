@@ -61,7 +61,6 @@ function checkModifyProduct() {
 		color.focus();
 		return false;
 	}
-	
 	// 상품 설명 체크
 	if(description.value==""){
 		alert("[설명]\n설명란을 입력하세요");

@@ -93,6 +93,7 @@
 	request.setCharacterEncoding("utf-8");
 	try{
 		String pg = request.getParameter("pg");
+		if(pg==null||pg.equals("")) pg = "1";
 		int num;
 		String p_id = "P0000";
 		String sql = "SELECT max(p_id) as max FROM product";
